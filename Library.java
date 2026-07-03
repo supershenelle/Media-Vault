@@ -14,8 +14,8 @@ public class Library {
         entries.remove(media);
     }
 
-    public Media searchEntry(String title)
+    /*public Media searchEntry(String title)
     {
-        // int key = entries.indexOf() pano to help
-    }
+        return Media;
+    }*/
 }
