@@ -5,7 +5,7 @@ public class Videogame {
     private String description;
     private int hoursPlayed;
 
-    public VideoGame(String title, String developer, int year, String description, int hoursPlayed)
+    public Videogame(String title, String developer, int year, String description, int hoursPlayed)
     {
         this.title = title;
         this.developer = developer;

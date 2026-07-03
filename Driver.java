@@ -36,6 +36,17 @@ public class Driver {
                 System.out.println("           FAVORITE MUSIC ARTIST          ");
                 System.out.println("TOP ALBUM: ");
                 System.out.println("TOP SONGS: ");
+
+                //TESTING MEDIA CLASS(MAV)
+                Movie interstellar = new Movie("Interstellar", "Christopher Nolan", 2014, "Sci-fi");
+                Media interstellarEntry = new Media(interstellar, "In Progress");
+                interstellarEntry.setRating(10);
+                interstellarEntry.setStatus("Completed");
+                interstellarEntry.setRating(10);
+                interstellarEntry.setReview("DONT LEAVE ME MURPH :(");
+                System.out.println(interstellarEntry.displayInfo());
+
+
                 break;
 
             case "2":
