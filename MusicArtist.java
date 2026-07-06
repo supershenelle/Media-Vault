@@ -67,9 +67,11 @@ public class MusicArtist {
 
     public boolean isCompleted()
     {
+        // if no albums, then false
         if(albums.isEmpty())
             return false;
 
+        // if all albums not complete, then false
         for(Album album : albums)
         {
             if(!album.isCompleted())

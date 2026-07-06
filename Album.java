@@ -70,6 +70,7 @@ public class Album {
             songsListened++;
     }
 
+    // para di paisa-isa/increment yung songs listened
     public void setSongsListened(int songsListened)
     {
         if(songsListened <= trackCount)
