@@ -20,7 +20,7 @@ public class Driver {
         System.out.println(topAndBottom);
     }
 
-    public void main(String[] args) {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("1. CREATE PROFILE");

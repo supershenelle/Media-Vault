@@ -60,8 +60,13 @@ public class Media {
         return status;
     }
 
-    public void setStatus(String status)
-    {
+    public void setStatus(String status) {
+        if (status.equalsIgnoreCase("Completed")
+                && type.equals("Music Artist")
+                && !musicArtist.isCompleted()) {
+            System.out.println("You haven't finished all albums yet.");
+            return;
+        }
         this.status = status;
     }
 

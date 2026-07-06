@@ -65,6 +65,33 @@ public class MusicArtist {
         this.description = description;
     }
 
+    public boolean isCompleted()
+    {
+        if(albums.isEmpty())
+            return false;
+
+        for(Album album : albums)
+        {
+            if(!album.isCompleted())
+                return false;
+        }
+
+        return true;
+    }
+
+    public String getProgress()
+    {
+        int completed = 0;
+
+        for(Album album : albums)
+        {
+            if(album.isCompleted())
+                completed++;
+        }
+
+        return completed + "/" + albums.size();
+    }
+    
     public String displayInfo()
     {
 

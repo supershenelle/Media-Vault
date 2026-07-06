@@ -4,17 +4,19 @@ import java.util.List;
 public class Album {
     private String title;
     private String genre;
-    //  private ArrayList<Song> songs; //IF ADD TAYO SONG CLASS
     private int trackCount;
+    private int songsListened;
     private int year;
-    private int duration;
+    private int rating;
+    private String review;
 
-    public Album(String title, String genre, int year)
+    public Album(String title, String genre, int year, int trackCount)
     {
         this.title = title;
         this.genre = genre;
         this.year = year;
-        // songs = new ArrayList<>();
+        this.trackCount = trackCount;
+        this.songsListened = 0;
     }
 
     public String getTitle()
@@ -57,42 +59,77 @@ public class Album {
         this.trackCount = trackCount;
     }
 
-    public int getDuration()
+    public int getSongsListened()
     {
-        return duration;
+        return songsListened;
     }
 
-    public void setDuration(int duration)
+    public void setSongsListened()
     {
-        this.duration = duration;
+        if (songsListened < trackCount)
+            songsListened++;
     }
 
-/*
-    public ArrayList<Song> getSongs() {
-        return songs;
+    public void setSongsListened(int songsListened)
+    {
+        if(songsListened <= trackCount)
+            this.songsListened = songsListened;
+        else
+            System.out.printf("input must be less than or equal to" + trackCount);
     }
 
-    public void addSong(Song song) {
-        songs.add(song);
-        trackCount = songs.size();
+
+    public boolean isCompleted()
+    {
+        return trackCount == songsListened;
     }
 
-    public void removeSong(Song song) {
-        songs.remove(song);
-        trackCount = songs.size();
+    public void setRating(int rating) {
+        if (isCompleted())
+        {
+            if (rating >= 1 && rating <= 10) {
+                this.rating = rating;
+            }
+            else {
+                System.out.println("Rating must be between 1 and 10.");
+            }
+        }
+        else
+        {
+            System.out.println("You haven't finished this album yet.");
+        }
     }
-*/
+
+    public int getRating()
+    {
+        return rating;
+    }
+
+
+    public void setReview(String review) {
+        if (isCompleted())
+            this.review = review;
+         else
+            System.out.println("You haven't finished this album yet.");
+
+    }
+
+    public String getReview()
+    {
+        return review;
+    }
+
     public String displayInfo()
     {
-
         String info = "";
-
         info += "Album: " + title + "\n";
         info += "Genre: " + genre + "\n";
         info += "Year: " + year + "\n";
-        info += "Tracks: " + trackCount + "\n";
-        info += "Duration: " + duration + " mins\n";
-
+        info += "Progress: " + songsListened + "/" + trackCount + " songs\n";
+        if (isCompleted()) {
+            info += "Rating: " + rating + "\n";
+            info += "Review: " + review + "\n";
+        }
         return info;
     }
 }
