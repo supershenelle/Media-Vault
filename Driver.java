@@ -4,7 +4,7 @@ public class Driver {
 
     private static Scanner scanner = new Scanner(System.in);
 
-    public static void displayProfile(Scanner scanner, String[] films, String[] games, String[] music)
+    public static String displayProfile(Scanner scanner, String[] films, String[] games, String[] music)
     {
         System.out.print("Enter username: ");
         String username = scanner.nextLine();
@@ -32,7 +32,8 @@ public class Driver {
 
         System.out.println("                 FAVORITE MUSIC ARTIST");
         System.out.println("TOP ALBUM: ");
-        System.out.println("TOP SONGS: ");
+        System.out.println("TOP SONGS: \n");
+
         Helper.divider1();
 
         System.out.println("                     YOUR LIBRARY");
@@ -42,7 +43,14 @@ public class Driver {
         System.out.println("   -->    (D) EXIT");
         System.out.print("Enter choice: ");
         String libChoice = scanner.nextLine();
-        // handle libChoice here or return it
+        while(!libChoice.equalsIgnoreCase("A") && !libChoice.equalsIgnoreCase("B") && !libChoice.equalsIgnoreCase("C") && !libChoice.equalsIgnoreCase("D"))
+        {
+            System.out.println("Please enter valid choice.");
+            System.out.print("Enter choice: ");
+            libChoice = scanner.nextLine();
+        }
+        System.out.println("");
+        return libChoice;
     }
 
     public static void main(String[] args) {
@@ -60,7 +68,49 @@ public class Driver {
         switch(input)
         {
             case "1":
-                Driver.displayProfile(scanner, films, games, music);
+                String libChoice = Driver.displayProfile(scanner, films, games, music).toUpperCase();
+                switch(libChoice)
+                {
+                    case "A":
+                        Helper.divider2();
+                        System.out.println("                   ENTER MEDIA TYPE");
+                        System.out.println("   -->    (1) FILMS (2) GAMES (3) DISCOGRAPHY");
+                        System.out.print("Enter choice: ");
+                        String mediaChoice = scanner.nextLine();
+                        while(!mediaChoice.equals("1") && !mediaChoice.equals("2") && !mediaChoice.equals("3"))
+                        {
+                            System.out.println("Please enter valid choice.");
+                            System.out.print("Enter choice: ");
+                            mediaChoice = scanner.nextLine();
+                        }
+                        System.out.println("");
+                        switch(mediaChoice)
+                        {
+                            case "1":
+                                System.out.println("");
+                                Helper.divider1();
+                                System.out.println("                  ADDING FILM ENTRY...");
+                                Helper.divider2();
+                                System.out.print("   -->    FILM TITLE: ");
+                                String filmTitle = scanner.nextLine();
+                                System.out.print("   -->    DIRECTOR: ");
+                                String director = scanner.nextLine();
+                                System.out.print("   -->    YEAR RELEASED: ");
+                                int year = scanner.nextInt();
+                                scanner.nextLine();
+                                System.out.print("   -->    DESCRIPTION: ");
+                                String description = scanner.nextLine();
+                                Movie movie = new Movie(filmTitle, director, year, description);
+                                Helper.divider2();
+                                System.out.println("                FILM SUCCESFULLY ADDED!");
+                                Helper.divider1();
+                                //for testing
+                                //System.out.println("TEST");
+                                //System.out.println(movie.displayInfo());
+                                break;
+                        }
+                        break;
+                }
                 break;
 
             case "2":

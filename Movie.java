@@ -58,7 +58,7 @@ public class Movie {
     {
         return "Title: " + title +
                 "\nDirector: " + director +
-                "\nYear: " + year +
+                "\nYear: " + String.valueOf(year) +
                 "\nDescription: " + description;
     }
 }
