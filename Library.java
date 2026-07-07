@@ -14,8 +14,18 @@ public class Library {
         entries.remove(media);
     }
 
-    /*public Media searchEntry(String title)
+    public List<Media> getEntries()
     {
-        return Media;
-    }*/
+        return entries;
+    }
+
+    public Media searchEntry(String title)
+    {
+        for (Media media : entries)
+        {
+            if (media.getType().equals("Movie") && media.getMovie().getTitle().equalsIgnoreCase(title))
+                return media;
+        }
+        return null;
+    }
 }

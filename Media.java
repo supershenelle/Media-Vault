@@ -78,7 +78,7 @@ public class Media {
         }
         else
         {
-            System.out.println("you still havent completed this entry");
+            System.out.println("You still havent completed this entry");
         }
     }
 
@@ -96,7 +96,7 @@ public class Media {
         }
         else
         {
-            System.out.println("you still havent completed this entry");
+            System.out.println("You still havent completed this entry");
         }
     }
 

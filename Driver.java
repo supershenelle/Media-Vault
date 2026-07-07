@@ -53,12 +53,48 @@ public class Driver {
         return libChoice;
     }
 
+    public static String getStatus(String status)
+    {
+        if (status.equals("1"))
+            return "Currently Watching";
+        else if (status.equals("2"))
+            return "In Watchlist";
+        else
+            return "Finished";
+    }
+
+    public static void testMediaLibrary() {
+        Library library = new Library();
+
+        Movie interstellar = new Movie("Interstellar", "Christopher Nolan", 2014, "Sci-fi");
+        Media entry1 = new Media(interstellar, "In Progress");
+        entry1.setRating(10);
+        entry1.setReview("DONT LEAVE ME MURPH :(");
+        library.addEntry(entry1);
+
+        Movie inception = new Movie("Inception", "Christopher Nolan", 2010, "Sci-fi");
+        Media entry2 = new Media(inception, "Completed");
+        library.addEntry(entry2);
+
+        System.out.println("=== TEST: addEntry ===");
+        System.out.println("Expected 2 entries, got: " + library.getEntries().size());
+
+        System.out.println("=== TEST: searchEntry ===");
+        Media found = library.searchEntry("Interstellar");
+        System.out.println(found != null ? found.displayInfo() : "NOT FOUND (bug!)");
+
+        System.out.println("=== TEST: removeEntry ===");
+        library.removeEntry(entry2);
+        System.out.println("Expected 1 entry, got: " + library.getEntries().size());
+    }
+
     public static void main(String[] args) {
         System.out.println("1. CREATE PROFILE");
         System.out.println("2. EXIT PROGRAM");
         System.out.println("");
         System.out.print("Enter input: ");
         String input = scanner.nextLine();
+        Library library = new Library();
 
         // initialize
         String[] films = {};
@@ -100,14 +136,29 @@ public class Driver {
                                 scanner.nextLine();
                                 System.out.print("   -->    DESCRIPTION: ");
                                 String description = scanner.nextLine();
+                                System.out.println("   -->    STATUS:\n -- (1) Currently Watching\n -- (2) In Watchlist\n -- (3) Finished");
+                                System.out.print("Enter status choice: ");
+                                String status = scanner.nextLine();
+                                while(!status.equals("1") && !status.equals("2") && !status.equals("3"))
+                                {
+                                    System.out.println("Please enter valid choice.");
+                                    System.out.print("Enter status choice: ");
+                                    status = scanner.nextLine();
+                                }
                                 Movie movie = new Movie(filmTitle, director, year, description);
+                                Media movieEntry = new Media(movie, Driver.getStatus(status));
+                                library.addEntry(movieEntry);
                                 Helper.divider2();
                                 System.out.println("                FILM SUCCESFULLY ADDED!");
                                 Helper.divider1();
-                                //for testing
-                                //System.out.println("TEST");
-                                //System.out.println(movie.displayInfo());
                                 break;
+
+                            case "2":
+                                System.out.println("");
+                                Helper.divider1();
+                                System.out.println("                  ADDING GAME ENTRY...");
+                                Helper.divider2();
+
                         }
                         break;
                 }
