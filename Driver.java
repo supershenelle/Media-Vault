@@ -2,34 +2,57 @@ import java.util.Scanner;
 
 public class Driver {
 
-    public static void printBoxes(String[] words) {
-        String topAndBottom = "";
-        String middleText = "";
+    private static Scanner scanner = new Scanner(System.in);
 
-        for (String word : words) {
-            int length = word.length();
+    public static void displayProfile(Scanner scanner, String[] films, String[] games, String[] music)
+    {
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
+        System.out.print("Enter display name: ");
+        String displayName = scanner.nextLine();
+        System.out.print("Enter bio: ");
+        String bio = scanner.nextLine();
+        Profile profile = new Profile(username, displayName, bio);
 
-            // Build the segments for each box with a space between boxes
-            topAndBottom += "+" + "-".repeat(length + 4) + "+ ";
-            middleText   += "|  " + word + "  | ";
-        }
+        System.out.println("");
+        Helper.divider1();
+        System.out.println("                   PROFILE CREATED!");
+        Helper.divider1();
+        System.out.println("   -->    USERNAME: " + profile.getUsername());
+        Helper.divider2();
+        System.out.println("   -->    DISPLAY NAME: " + profile.getDisplayName());
+        System.out.println("   -->    BIO: " + profile.getBio());
+        Helper.divider1();
 
-        // Print the lines horizontally
-        System.out.println(topAndBottom);
-        System.out.println(middleText);
-        System.out.println(topAndBottom);
+        System.out.println("                      TOP 3 FILMS");
+        Helper.printBoxes(films);
+
+        System.out.println("                   TOP 3 VIDEO GAMES");
+        Helper.printBoxes(games);
+
+        System.out.println("                 FAVORITE MUSIC ARTIST");
+        System.out.println("TOP ALBUM: ");
+        System.out.println("TOP SONGS: ");
+        Helper.divider1();
+
+        System.out.println("                     YOUR LIBRARY");
+        System.out.println("   -->    (A) ADD MEDIA TO LIBRARY");
+        System.out.println("   -->    (B) REMOVE MEDIA FROM LIBRARY");
+        System.out.println("   -->    (C) SEARCH MEDIA ENTRY IN LIBRARY");
+        System.out.println("   -->    (D) EXIT");
+        System.out.print("Enter choice: ");
+        String libChoice = scanner.nextLine();
+        // handle libChoice here or return it
     }
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
         System.out.println("1. CREATE PROFILE");
         System.out.println("2. EXIT PROGRAM");
         System.out.println("");
         System.out.print("Enter input: ");
         String input = scanner.nextLine();
 
-        //initialize
+        // initialize
         String[] films = {};
         String[] games = {};
         String[] music = {};
@@ -37,44 +60,7 @@ public class Driver {
         switch(input)
         {
             case "1":
-                System.out.print("Enter username: ");
-                String username = scanner.nextLine();
-                System.out.print("Enter display name: ");
-                String displayName = scanner.nextLine();
-                System.out.print("Enter bio: ");
-                String bio = scanner.nextLine();
-                Profile profile = new Profile(username, displayName, bio);
-                System.out.println("");
-                Helper.divider1();
-                System.out.println("                   PROFILE CREATED!");
-                Helper.divider1();
-                System.out.println("   -->    USERNAME: " + profile.getUsername());
-                Helper.divider2();
-                System.out.println("   -->    DISPLAY NAME: " + profile.getDisplayName());
-                System.out.println("   -->    BIO: " + profile.getBio());
-                Helper.divider1();
-                System.out.println("                      TOP 3 FILMS");
-                Helper.printBoxes(films);
-
-                System.out.println("                   TOP 3 VIDEO GAMES");
-                Helper.printBoxes(games);
-
-                System.out.println("                 FAVORITE MUSIC ARTIST");
-                System.out.println("TOP ALBUM: ");
-                System.out.println("TOP SONGS: ");
-                Helper.divider1();
-
-                System.out.println("                       YOUR DIARY");
-
-                //TESTING MEDIA CLASS(MAV)
-                /*Movie interstellar = new Movie("Interstellar", "Christopher Nolan", 2014, "Sci-fi");
-                Media interstellarEntry = new Media(interstellar, "In Progress");
-                interstellarEntry.setRating(10);
-                interstellarEntry.setStatus("Completed");
-                interstellarEntry.setRating(10);
-                interstellarEntry.setReview("DONT LEAVE ME MURPH :(");
-                System.out.println(interstellarEntry.displayInfo());*/
-
+                Driver.displayProfile(scanner, films, games, music);
                 break;
 
             case "2":
@@ -87,7 +73,6 @@ public class Driver {
                     System.out.print("Enter input: ");
                     input = scanner.nextLine();
                 }
-        } // switch
-
-    } // main
-} // driiver
+        }
+    }
+}
