@@ -84,7 +84,7 @@ public class Driver {
 
     public static Status getInputStatus(Scanner scanner)
     {
-        System.out.println("   -->    STATUS:\n -- (1) Currently Watching\n -- (2) In Watchlist\n -- (3) Finished");
+        System.out.println("   -->    STATUS:\n -- (1) Planning\n -- (2) In Progress\n -- (3) Finished");
         System.out.print("Enter status choice: ");
         String choice = scanner.nextLine();
         while(!choice.equals("1") && !choice.equals("2") && !choice.equals("3"))
@@ -212,6 +212,54 @@ public class Driver {
                                     library.addEntry(gameEntry);
                                     Interface.divider2();
                                     System.out.println("                GAME SUCCESFULLY ADDED!");
+                                    Interface.divider1();
+                                    System.out.println("");
+                                    break;
+
+                                case "3":
+                                    System.out.println("");
+                                    Interface.divider1();
+                                    System.out.println("                  ADDING MUSIC ARTIST ENTRY...");
+                                    Interface.divider2();
+
+                                    System.out.print("   -->    ARTIST TITLE: ");
+                                    String artistName = scanner.nextLine();
+                                    System.out.print("   -->    DESCRIPTION: ");
+                                    String artistDescription = scanner.nextLine();
+                                    MusicArtist musicArtist = new MusicArtist(artistName, artistDescription);
+
+                                    System.out.print("   -->    HOW MANY ALBUMS DOES THIS ARTIST HAVE: ");
+                                    int albumCount = scanner.nextInt();
+                                    scanner.nextLine();
+                                    // create the albums (SHEN KAW NA BAHALA SA INTERFACE NETO)
+                                    for(int i = 1; i <= albumCount; i++)
+                                    {
+                                        System.out.println("\nAlbum " + i);
+
+                                        System.out.print("Title: ");
+                                        String title = scanner.nextLine();
+
+                                        System.out.print("Genre: ");
+                                        String genre = scanner.nextLine();
+
+                                        System.out.print("Year: ");
+                                        int year = scanner.nextInt();
+
+                                        System.out.print("Number of tracks: ");
+                                        int tracks = scanner.nextInt();
+                                        scanner.nextLine();
+
+                                        Album album = new Album(title, genre, year, tracks);
+
+                                        musicArtist.addAlbum(album);
+                                    }
+                                    
+                                    Status statusArtist = Driver.getInputStatus(scanner);
+                                    Media artistEntry = new Media(musicArtist, statusArtist);
+                                    // Media movieEntry = new Media(movie, Driver.getFilmStatus(statusFilm));
+                                    library.addEntry(movieEntry);
+                                    Interface.divider2();
+                                    System.out.println("                FILM SUCCESFULLY ADDED!");
                                     Interface.divider1();
                                     System.out.println("");
                                     break;

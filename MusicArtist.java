@@ -3,7 +3,6 @@ import java.util.List;
 
 public class MusicArtist {
     private String name;
-    private ArrayList<String> genres;
     private ArrayList<Album> albums;
     private String description;
 
@@ -11,7 +10,6 @@ public class MusicArtist {
     {
         this.name = name;
         this.description = description;
-        genres = new ArrayList<>();
         albums = new ArrayList<>();
     }
 
@@ -25,20 +23,6 @@ public class MusicArtist {
         this.name = name;
     }
 
-    public ArrayList<String> getGenres()
-    {
-        return genres;
-    }
-
-    public void addGenre(String genre)
-    {
-        genres.add(genre);
-    }
-
-    public void removeGenre(String genre)
-    {
-        genres.remove(genre);
-    }
 
     public ArrayList<Album> getAlbums()
     {
@@ -100,7 +84,6 @@ public class MusicArtist {
         String info = "";
 
         info += "Artist: " + name + "\n";
-        info += "Genres: " + genres + "\n";
         info += "Description: " + description + "\n";
         info += "Albums:\n";
 

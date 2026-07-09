@@ -62,10 +62,14 @@ public class Media {
 
     public void setStatus(Status status) {
         // check if music artist, since pede mo lang sya marate if completed na albums
-        if (status == Status.COMPLETED && type.equals("Music Artist") && !musicArtist.isCompleted())
+        if(type.equals("Music Artist"))
         {
-            System.out.println("You haven't finished all albums yet.");
-            return;
+            if(status == Status.COMPLETED && !musicArtist.isCompleted())
+            {
+                System.out.println("You haven't finished all albums yet.");
+                musicArtist.getProgress();
+                return;
+            }
         }
         this.status = status;
     }

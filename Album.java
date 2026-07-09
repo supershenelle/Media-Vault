@@ -7,8 +7,6 @@ public class Album {
     private int trackCount;
     private int songsListened;
     private int year;
-    private int rating;
-    private String review;
 
     public Album(String title, String genre, int year, int trackCount)
     {
@@ -85,40 +83,6 @@ public class Album {
         return trackCount == songsListened;
     }
 
-    public void setRating(int rating) {
-        if (isCompleted())
-        {
-            if (rating >= 1 && rating <= 10) {
-                this.rating = rating;
-            }
-            else {
-                System.out.println("Rating must be between 1 and 10.");
-            }
-        }
-        else
-        {
-            System.out.println("You haven't finished this album yet.");
-        }
-    }
-
-    public int getRating()
-    {
-        return rating;
-    }
-
-
-    public void setReview(String review) {
-        if (isCompleted())
-            this.review = review;
-         else
-            System.out.println("You haven't finished this album yet.");
-
-    }
-
-    public String getReview()
-    {
-        return review;
-    }
 
     public String displayInfo()
     {
@@ -127,10 +91,6 @@ public class Album {
         info += "Genre: " + genre + "\n";
         info += "Year: " + year + "\n";
         info += "Progress: " + songsListened + "/" + trackCount + " songs\n";
-        if (isCompleted()) {
-            info += "Rating: " + rating + "\n";
-            info += "Review: " + review + "\n";
-        }
         return info;
     }
 }
