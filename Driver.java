@@ -4,6 +4,7 @@ public class Driver {
 
     private static Scanner scanner = new Scanner(System.in);
 
+    //display profile function
     public static void displayProfile(Scanner scanner, String[] films, String[] games, String[] music)
     {
         System.out.print("Enter username: ");
@@ -15,35 +16,36 @@ public class Driver {
         Profile profile = new Profile(username, displayName, bio);
 
         System.out.println("");
-        Helper.divider1();
-        System.out.println("                   PROFILE CREATED!");
-        Helper.divider1();
-        System.out.println("   -->    USERNAME: " + profile.getUsername());
-        Helper.divider2();
-        System.out.println("   -->    DISPLAY NAME: " + profile.getDisplayName());
-        System.out.println("   -->    BIO: " + profile.getBio());
-        Helper.divider1();
+        Interface.divider1();
+        Interface.printCentered("PROFILE CREATED!");
+        Interface.divider1();
+        Interface.printCentered("USERNAME: @" + profile.getUsername());
+        Interface.divider2();
+        Interface.printCentered("DISPLAY NAME: " + profile.getDisplayName());
+        Interface.printCentered("BIO: " + profile.getBio());
+        Interface.divider1();
 
-        System.out.println("                      TOP 3 FILMS");
-        Helper.printBoxes(films);
+        Interface.printCentered("TOP 3 FILMS");
+        Interface.printBoxes(films);
 
-        System.out.println("                   TOP 3 VIDEO GAMES");
-        Helper.printBoxes(games);
+        Interface.printCentered("TOP 3 VIDEO GAMES");
+        Interface.printBoxes(games);
 
-        System.out.println("                 FAVORITE MUSIC ARTIST");
+        Interface.printCentered("FAVORITE MUSIC ARTIST");
         System.out.println("TOP ALBUM: ");
         System.out.println("TOP SONGS: \n");
 
-        Helper.divider1();
+        Interface.divider1();
     }
 
+    // display library para di paulit ulit sa switch
     public static String libraryMenu(Scanner scanner)
     {
-        System.out.println("                     YOUR LIBRARY");
-        System.out.println("   -->    (A) ADD MEDIA TO LIBRARY");
-        System.out.println("   -->    (B) REMOVE MEDIA FROM LIBRARY");
-        System.out.println("   -->    (C) SEARCH MEDIA ENTRY IN LIBRARY");
-        System.out.println("   -->    (D) EXIT");
+        Interface.printCentered("YOUR LIBRARY");
+        System.out.println("                -->    (A) ADD MEDIA TO LIBRARY");
+        System.out.println("                -->    (B) REMOVE MEDIA FROM LIBRARY");
+        System.out.println("                -->    (C) SEARCH MEDIA ENTRY IN LIBRARY");
+        System.out.println("                -->    (D) EXIT");
         System.out.print("Enter choice: ");
         String libChoice = scanner.nextLine();
         while(!libChoice.equalsIgnoreCase("A") && !libChoice.equalsIgnoreCase("B") && !libChoice.equalsIgnoreCase("C") && !libChoice.equalsIgnoreCase("D"))
@@ -56,6 +58,7 @@ public class Driver {
         return libChoice.toUpperCase();
     }
 
+    // eto ibahin m mav
     public static String getFilmStatus(String status)
     {
         if (status.equals("1"))
@@ -77,8 +80,9 @@ public class Driver {
     }
 
     public static void main(String[] args) {
-        System.out.println("1. CREATE PROFILE");
-        System.out.println("2. EXIT PROGRAM");
+        Interface.displayTitle();
+        Interface.printCentered("=== MAIN NAVIGATION: CHOOSE OPTION ===");
+        Interface.printCentered("(1) CREATE PROFILE      (2) EXIT PROGRAM");
         System.out.println("");
         System.out.print("Enter input: ");
         String input = scanner.nextLine();
@@ -101,9 +105,9 @@ public class Driver {
                     switch(libChoice)
                     {
                         case "A":
-                            Helper.divider2();
-                            System.out.println("                   ENTER MEDIA TYPE");
-                            System.out.println("   -->    (1) FILMS (2) GAMES (3) DISCOGRAPHY");
+                            Interface.divider2();
+                            Interface.printCentered("ENTER MEDIA TYPE");
+                            Interface.printCentered("(1) FILMS           (2) GAMES              (3) DISCOGRAPHY");
                             System.out.print("Enter choice: ");
                             String mediaChoice = scanner.nextLine();
                             while(!mediaChoice.equals("1") && !mediaChoice.equals("2") && !mediaChoice.equals("3"))
@@ -118,9 +122,9 @@ public class Driver {
                             {
                                 case "1":
                                     System.out.println("");
-                                    Helper.divider1();
+                                    Interface.divider1();
                                     System.out.println("                  ADDING FILM ENTRY...");
-                                    Helper.divider2();
+                                    Interface.divider2();
 
                                     System.out.print("   -->    FILM TITLE: ");
                                     String filmTitle = scanner.nextLine();
@@ -144,17 +148,17 @@ public class Driver {
                                     Movie movie = new Movie(filmTitle, director, filmYear, filmDescription);
                                     Media movieEntry = new Media(movie, Driver.getFilmStatus(statusFilm));
                                     library.addEntry(movieEntry);
-                                    Helper.divider2();
+                                    Interface.divider2();
                                     System.out.println("                FILM SUCCESFULLY ADDED!");
-                                    Helper.divider1();
+                                    Interface.divider1();
                                     System.out.println("");
                                     break;
 
                                 case "2":
                                     System.out.println("");
-                                    Helper.divider1();
+                                    Interface.divider1();
                                     System.out.println("                  ADDING GAME ENTRY...");
-                                    Helper.divider2();
+                                    Interface.divider2();
 
                                     System.out.print("   -->    GAME TITLE: ");
                                     String gameTitle = scanner.nextLine();
@@ -181,9 +185,9 @@ public class Driver {
                                     Videogame game = new Videogame(gameTitle, developer, gameYear, gameDescription, hoursPlayed);
                                     Media gameEntry = new Media(game, Driver.getGameStatus(statusGame));
                                     library.addEntry(gameEntry);
-                                    Helper.divider2();
+                                    Interface.divider2();
                                     System.out.println("                GAME SUCCESFULLY ADDED!");
-                                    Helper.divider1();
+                                    Interface.divider1();
                                     System.out.println("");
                                     break;
                             } // switch media choice
