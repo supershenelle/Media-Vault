@@ -38,7 +38,7 @@ public class Driver {
         Interface.printCentered("YOUR LIBRARY");
         System.out.println("                -->    (A) ADD MEDIA TO LIBRARY");
         System.out.println("                -->    (B) REMOVE MEDIA FROM LIBRARY");
-        System.out.println("                -->    (C) SEARCH MEDIA ENTRY IN LIBRARY");
+        System.out.println("                -->    (C) FILTER MEDIA ENTRY IN LIBRARY");
         System.out.println("                -->    (D) EXIT");
         System.out.print("Enter choice: ");
         String libChoice = scanner.nextLine();
@@ -81,6 +81,27 @@ public class Driver {
         return null;
     }
 
+    public static void displayFilteredResults(ArrayList<Media> results)
+    {
+        Interface.divider1();
+        Interface.printCentered("=== RESULTS (" + results.size() + " FOUND) ===");
+        Interface.divider2();
+
+        if (results.isEmpty())
+        {
+            Interface.printCentered("[ No matching entries found ]");
+        }
+        else
+        {
+            for (Media media : results)
+            {
+                System.out.println(media.displayInfo());
+                Interface.divider2();
+            }
+        }
+        Interface.divider1();
+        System.out.println("");
+    }
 
     public static void main(String[] args) {
         boolean running = true;
@@ -291,7 +312,42 @@ public class Driver {
                                 System.out.println("");
                                 break;
                             case "C" :
-                                //search entry
+                                //filter entry
+                                Interface.divider2();
+                                Interface.printCentered("FILTER MEDIA ENTRIES BY");
+                                Interface.printCentered("(1) STATUS           (2) MEDIA TYPE");
+                                System.out.print("Enter choice: ");
+                                String filterChoice = scanner.nextLine();
+                                while(!filterChoice.equals("1") && !filterChoice.equals("2"))
+                                {
+                                    System.out.println("Please enter valid choice.");
+                                    System.out.print("Enter choice: ");
+                                    filterChoice = scanner.nextLine();
+                                }
+                                System.out.println("");
+
+                                ArrayList<Media> filteredResults;
+                                if (filterChoice.equals("1"))
+                                {
+                                    Status filterStatus = Driver.getInputStatus(scanner);
+                                    filteredResults = library.filterByStatus(filterStatus);
+                                }
+                                else
+                                {
+                                    Interface.printCentered("(1) FILMS           (2) GAMES              (3) DISCOGRAPHY");
+                                    System.out.print("Enter choice: ");
+                                    String filterTypeChoice = scanner.nextLine();
+                                    while(!filterTypeChoice.equals("1") && !filterTypeChoice.equals("2") && !filterTypeChoice.equals("3"))
+                                    {
+                                        System.out.println("Please enter valid choice.");
+                                        System.out.print("Enter choice: ");
+                                        filterTypeChoice = scanner.nextLine();
+                                    }
+                                    String filterType = Driver.mediaTypeFromChoice(filterTypeChoice);
+                                    filteredResults = library.filterByType(filterType);
+                                }
+
+                                Driver.displayFilteredResults(filteredResults);
                                 break;
 
                             case "D" :

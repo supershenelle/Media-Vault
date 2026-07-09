@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Library {
-    private List<Media> entries = new ArrayList<>();
+    private ArrayList<Media> entries = new ArrayList<>();
 
     public void displayMovies()
     {
@@ -74,7 +74,7 @@ public class Library {
         return false;
     }
 
-    public List<Media> getEntries()
+    public ArrayList<Media> getEntries()
     {
         return entries;
     }
@@ -99,9 +99,9 @@ public class Library {
         return null;
     }
 
-    public List<Media> filterByStatus(Status status)
+    public ArrayList<Media> filterByStatus(Status status)
     {
-        List<Media> filtered = new ArrayList<>();
+        ArrayList<Media> filtered = new ArrayList<>();
         for (Media media : entries)
         {
             if (media.getStatus() == status)
@@ -110,9 +110,9 @@ public class Library {
         return filtered;
     }
 
-    public List<Media> filterByType(String type)
+    public ArrayList<Media> filterByType(String type)
     {
-        List<Media> filtered = new ArrayList<>();
+        ArrayList<Media> filtered = new ArrayList<>();
         for (Media media : entries)
         {
             if (media.getType().equalsIgnoreCase(type))
