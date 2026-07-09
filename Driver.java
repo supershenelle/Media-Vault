@@ -78,11 +78,6 @@ public class Driver {
             String input = scanner.nextLine();
             Library library = new Library();
 
-            // initialize
-            String[] films = {};
-            String[] games = {};
-            String[] music = {};
-
             switch(input)
             {
                 case "1":
@@ -217,13 +212,81 @@ public class Driver {
                                         Interface.divider1();
                                         System.out.println("");
                                         break;
-                                } // switch media choice
+                                } // switch mediaChoice
                                 Driver.displayProfile(scanner, profile, films, games, music);
                                 break;
 
                             case "B" :
-                                //remove entry
+                                Interface.divider2();
+                                Interface.printCentered("REMOVE MEDIA TYPE");
+                                Interface.printCentered("(1) FILMS           (2) GAMES              (3) DISCOGRAPHY");
+                                System.out.print("Enter choice: ");
+                                String removeChoice = scanner.nextLine();
+                                while(!removeChoice.equals("1") && !removeChoice.equals("2") && !removeChoice.equals("3"))
+                                {
+                                    System.out.println("Please enter valid choice.");
+                                    System.out.print("Enter choice: ");
+                                    removeChoice = scanner.nextLine();
+                                }
+                                System.out.println("");
                                 break;
+
+                                switch(removeChoice)
+                                {
+                                    case "1" :
+                                        System.out.println("");
+                                        Interface.divider1();
+                                        Interface.printCentered("=== REMOVING FILM ENTRY ===");
+                                        Interface.divider2();
+
+                                        library.displayMovies();
+                                        System.out.println("");
+
+                                        System.out.println("   -->    Enter FILM title to remove: ");
+                                        String removeFilm = scanner.nextLine();
+                                        // boolean isRemoved = library.removeEntry() tangina di ko alam gagawin
+                                        break;
+
+                                    case "2" :
+                                        System.out.println("");
+                                        Interface.divider1();
+                                        Interface.printCentered("=== REMOVING GAME ENTRY ===");
+                                        Interface.divider2();
+
+                                        library.displayGames();
+                                        System.out.println("");
+
+                                        System.out.print("   -->    Enter GAME title to remove: ");
+                                        String removeGame = scanner.nextLine();
+                                        // ?? HOW HOW THE CARABAO
+                                        break;
+
+                                    case "3" :
+                                        System.out.println("");
+                                        Interface.divider1();
+                                        Interface.printCentered("=== REMOVING MUSIC ARTIST ENTRY ===");
+                                        Interface.divider2();
+
+                                        library.displayArtists();
+                                        System.out.println("");
+
+                                        System.out.print("   -->    Enter ARTIST name to remove: ");
+                                        String removeArtist = scanner.nextLine();
+                                        // HOW HOW THE CARABAO (1)
+                                        break;
+
+                                } // switch removeChoice
+
+                            /* MAV DI PA NAKA IMPLEMENT ISREMOVED IDK MAN HUHUHUHU
+                            Interface.divider2();
+                            if (isRemoved) {
+                                Interface.printCentered("=== ENTRY SUCCESSFULLY REMOVED! ===");
+                            } else {
+                                Interface.printCentered("!!! REMOVE FAILED: ENTRY NOT FOUND IN THIS CATEGORY !!!");
+                            }
+                            Interface.divider1();
+                            System.out.println("");
+                            */
 
                             case "C" :
                                 //search entry
