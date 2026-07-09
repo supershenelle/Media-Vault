@@ -8,11 +8,11 @@ public class Library {
     {
         System.out.println("--- CURRENT FILMS IN LIBRARY ---");
         boolean hasMovies = false;
-        for (Media media : entriesList)
+        for (Media media : entries)
         {
             if (media.getType().equalsIgnoreCase("Movie") && media.getMovie() != null)
             {
-                System.out.println("   -> " + media.getMovie().getFilmTitle());
+                System.out.println("   -> " + media.getMovie().getTitle());
                 hasMovies = true;
             }
         }
@@ -26,11 +26,11 @@ public class Library {
     public void displayGames() {
         System.out.println("--- CURRENT GAMES IN LIBRARY ---");
         boolean hasGames = false;
-        for (Media media : entriesList)
+        for (Media media : entries)
         {
             if (media.getType().equalsIgnoreCase("Videogame") && media.getVideogame() != null)
             {
-                System.out.println("   -> " + media.getVideogame().getGameTitle());
+                System.out.println("   -> " + media.getVideogame().getTitle());
                 hasGames = true;
             }
         }
@@ -45,10 +45,10 @@ public class Library {
     {
         System.out.println("--- CURRENT ARTISTS IN LIBRARY ---");
         boolean hasArtists = false;
-        for (Media media : entriesList)
+        for (Media media : entries)
         {
-            if (media.getType().equalsIgnoreCase("MusicArtist") && media.getMusicArtist() != null) {
-                System.out.println("   -> " + media.getMusicArtist().getArtistName());
+            if (media.getType().equalsIgnoreCase("Music Artist") && media.getMusicArtist() != null) {
+                System.out.println("   -> " + media.getMusicArtist().getName());
                 hasArtists = true;
             }
         }
@@ -87,5 +87,37 @@ public class Library {
                 return media;
         }
         return null;
+    }
+
+    public Media findEntry(String type, String title)
+    {
+        for (Media media : entries)
+        {
+            if (media.getType().equalsIgnoreCase(type) && media.getTitle().equalsIgnoreCase(title))
+                return media;
+        }
+        return null;
+    }
+
+    public List<Media> filterByStatus(Status status)
+    {
+        List<Media> filtered = new ArrayList<>();
+        for (Media media : entries)
+        {
+            if (media.getStatus() == status)
+                filtered.add(media);
+        }
+        return filtered;
+    }
+
+    public List<Media> filterByType(String type)
+    {
+        List<Media> filtered = new ArrayList<>();
+        for (Media media : entries)
+        {
+            if (media.getType().equalsIgnoreCase(type))
+                filtered.add(media);
+        }
+        return filtered;
     }
 }

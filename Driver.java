@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Driver {
 
@@ -65,8 +67,26 @@ public class Driver {
 
     }
 
+    public static String mediaTypeFromChoice(String choice)
+    {
+        switch(choice)
+        {
+            case "1":
+                return "Movie";
+            case "2":
+                return "Videogame";
+            case "3":
+                return "Music Artist";
+        }
+        return null;
+    }
+
+
     public static void main(String[] args) {
         boolean running = true;
+        String[] films = new String[3];
+        String[] games = new String[3];
+        String[] music = new String[3];
 
         while (running)
         {
@@ -229,65 +249,47 @@ public class Driver {
                                     removeChoice = scanner.nextLine();
                                 }
                                 System.out.println("");
+
+                                String removeType = Driver.mediaTypeFromChoice(removeChoice);
+                                // cuz string is immutable, magagalaw remove type variable so we make anotha variable for displaying
+                                String removeLabel;
+
+                                if (removeType.equals("Movie")) {
+                                    removeLabel = "FILM";
+                                } else if (removeType.equals("Videogame")) {
+                                    removeLabel = "GAME";
+                                } else {
+                                    removeLabel = "MUSIC ARTIST";
+                                }
+
+                                System.out.println("");
+                                Interface.divider1();
+                                Interface.printCentered("=== REMOVING " + removeLabel + " ENTRY ===");
+                                Interface.divider2();
+
+                                if (removeType.equals("Movie"))
+                                    library.displayMovies();
+                                else if (removeType.equals("Videogame"))
+                                    library.displayGames();
+                                else
+                                    library.displayArtists();
+                                System.out.println("");
+
+                                System.out.print("   -->    Enter " + removeLabel + " title to remove: ");
+                                String removeTitle = scanner.nextLine();
+
+                                Media entryToRemove = library.findEntry(removeType, removeTitle);
+                                boolean isRemoved = library.removeEntry(entryToRemove);
+
+                                Interface.divider2();
+                                if (isRemoved) {
+                                    Interface.printCentered("=== ENTRY SUCCESSFULLY REMOVED! ===");
+                                } else {
+                                    Interface.printCentered("!!! REMOVE FAILED: ENTRY NOT FOUND IN THIS CATEGORY !!!");
+                                }
+                                Interface.divider1();
+                                System.out.println("");
                                 break;
-
-                                switch(removeChoice)
-                                {
-                                    case "1" :
-                                        System.out.println("");
-                                        Interface.divider1();
-                                        Interface.printCentered("=== REMOVING FILM ENTRY ===");
-                                        Interface.divider2();
-
-                                        library.displayMovies();
-                                        System.out.println("");
-
-                                        System.out.println("   -->    Enter FILM title to remove: ");
-                                        String removeFilm = scanner.nextLine();
-                                        // boolean isRemoved = library.removeEntry() tangina di ko alam gagawin
-                                        break;
-
-                                    case "2" :
-                                        System.out.println("");
-                                        Interface.divider1();
-                                        Interface.printCentered("=== REMOVING GAME ENTRY ===");
-                                        Interface.divider2();
-
-                                        library.displayGames();
-                                        System.out.println("");
-
-                                        System.out.print("   -->    Enter GAME title to remove: ");
-                                        String removeGame = scanner.nextLine();
-                                        // ?? HOW HOW THE CARABAO
-                                        break;
-
-                                    case "3" :
-                                        System.out.println("");
-                                        Interface.divider1();
-                                        Interface.printCentered("=== REMOVING MUSIC ARTIST ENTRY ===");
-                                        Interface.divider2();
-
-                                        library.displayArtists();
-                                        System.out.println("");
-
-                                        System.out.print("   -->    Enter ARTIST name to remove: ");
-                                        String removeArtist = scanner.nextLine();
-                                        // HOW HOW THE CARABAO (1)
-                                        break;
-
-                                } // switch removeChoice
-
-                            /* MAV DI PA NAKA IMPLEMENT ISREMOVED IDK MAN HUHUHUHU
-                            Interface.divider2();
-                            if (isRemoved) {
-                                Interface.printCentered("=== ENTRY SUCCESSFULLY REMOVED! ===");
-                            } else {
-                                Interface.printCentered("!!! REMOVE FAILED: ENTRY NOT FOUND IN THIS CATEGORY !!!");
-                            }
-                            Interface.divider1();
-                            System.out.println("");
-                            */
-
                             case "C" :
                                 //search entry
                                 break;

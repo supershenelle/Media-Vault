@@ -107,6 +107,16 @@ public class Media {
         }
     }
 
+    public String getTitle()
+    {
+        if (type.equals("Movie"))
+            return movie.getTitle();
+        else if (type.equals("Videogame"))
+            return videogame.getTitle();
+        else
+            return musicArtist.getName();
+    }
+
     public String getReview()
     {
         return review;
