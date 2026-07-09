@@ -26,5 +26,7 @@ public enum Status {
             case "3":
                 return COMPLETED;
         }
+
+        return null;
     }
 }

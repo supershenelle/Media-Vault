@@ -253,11 +253,10 @@ public class Driver {
 
                                         musicArtist.addAlbum(album);
                                     }
-                                    
+
                                     Status statusArtist = Driver.getInputStatus(scanner);
                                     Media artistEntry = new Media(musicArtist, statusArtist);
-                                    // Media movieEntry = new Media(movie, Driver.getFilmStatus(statusFilm));
-                                    library.addEntry(movieEntry);
+                                    library.addEntry(artistEntry);
                                     Interface.divider2();
                                     System.out.println("                FILM SUCCESFULLY ADDED!");
                                     Interface.divider1();

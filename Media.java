@@ -81,7 +81,7 @@ public class Media {
             if(rating >= 1 && rating <= 5)
                 this.rating = rating;
             else
-                System.out.println("input a number between 1 to 5 only")
+                System.out.println("input a number between 1 to 5 only");
         }
         else
         {
