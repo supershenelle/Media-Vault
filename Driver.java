@@ -59,6 +59,7 @@ public class Driver {
     }
 
     // eto ibahin m mav
+    /*
     public static String getFilmStatus(String status)
     {
         if (status.equals("1"))
@@ -77,6 +78,23 @@ public class Driver {
             return "Want to Play";
         else
             return "Completed";
+    }
+
+    */
+
+    public static Status getInputStatus(Scanner scanner)
+    {
+        System.out.println("   -->    STATUS:\n -- (1) Currently Watching\n -- (2) In Watchlist\n -- (3) Finished");
+        System.out.print("Enter status choice: ");
+        String choice = scanner.nextLine();
+        while(!choice.equals("1") && !choice.equals("2") && !choice.equals("3"))
+        {
+            System.out.println("Please enter valid choice.");
+            System.out.print("Enter status choice: ");
+            choice = scanner.nextLine();
+        }
+        return Status.fromChoice(choice);
+
     }
 
     public static void main(String[] args) {
@@ -135,6 +153,8 @@ public class Driver {
                                     scanner.nextLine();
                                     System.out.print("   -->    DESCRIPTION: ");
                                     String filmDescription = scanner.nextLine();
+                                    Status statusFilm = Driver.getInputStatus(scanner);
+                                    /*
                                     System.out.println("   -->    STATUS:\n -- (1) Currently Watching\n -- (2) In Watchlist\n -- (3) Finished");
                                     System.out.print("Enter status choice: ");
                                     String statusFilm = scanner.nextLine();
@@ -144,9 +164,10 @@ public class Driver {
                                         System.out.print("Enter status choice: ");
                                         statusFilm = scanner.nextLine();
                                     }
-
+                                    */
                                     Movie movie = new Movie(filmTitle, director, filmYear, filmDescription);
-                                    Media movieEntry = new Media(movie, Driver.getFilmStatus(statusFilm));
+                                    Media movieEntry = new Media(movie, statusFilm);
+                                    // Media movieEntry = new Media(movie, Driver.getFilmStatus(statusFilm));
                                     library.addEntry(movieEntry);
                                     Interface.divider2();
                                     System.out.println("                FILM SUCCESFULLY ADDED!");
@@ -172,6 +193,8 @@ public class Driver {
                                     System.out.print("   -->    HOURS PLAYED: ");
                                     int hoursPlayed = scanner.nextInt();
                                     scanner.nextLine();
+                                    Status statusGame = Driver.getInputStatus(scanner);
+                                    /*
                                     System.out.println("   -->    STATUS:\n -- (1) Currently Playing\n -- (2) Want to Play\n -- (3) Completed");
                                     System.out.print("Enter status choice: ");
                                     String statusGame = scanner.nextLine();
@@ -182,8 +205,10 @@ public class Driver {
                                         statusGame = scanner.nextLine();
                                     }
 
+                                     */
+
                                     Videogame game = new Videogame(gameTitle, developer, gameYear, gameDescription, hoursPlayed);
-                                    Media gameEntry = new Media(game, Driver.getGameStatus(statusGame));
+                                    Media gameEntry = new Media(game, statusGame);
                                     library.addEntry(gameEntry);
                                     Interface.divider2();
                                     System.out.println("                GAME SUCCESFULLY ADDED!");

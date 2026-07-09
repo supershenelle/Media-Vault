@@ -4,11 +4,11 @@ public class Media {
     private Movie movie;
     private Videogame videogame;
     private MusicArtist musicArtist;
-    private String status;
+    private Status status;
     private int rating;
     private String review;
 
-    public Media(Movie movie, String status)
+    public Media(Movie movie, Status status)
     {
         this.movie = movie;
         this.status = status;
@@ -17,7 +17,7 @@ public class Media {
         review = "";
     }
 
-    public Media(Videogame videogame, String status)
+    public Media(Videogame videogame, Status status)
     {
         this.videogame = videogame;
         this.status = status;
@@ -26,7 +26,7 @@ public class Media {
         review = "";
     }
 
-    public Media(MusicArtist musicArtist, String status)
+    public Media(MusicArtist musicArtist, Status status)
     {
         this.musicArtist = musicArtist;
         this.status = status;
@@ -55,14 +55,14 @@ public class Media {
         return type;
     }
 
-    public String getStatus()
+    public Status getStatus()
     {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         // check if music artist, since pede mo lang sya marate if completed na albums
-        if (status.equalsIgnoreCase("Completed") && type.equals("Music Artist") && !musicArtist.isCompleted())
+        if (status == Status.COMPLETED && type.equals("Music Artist") && !musicArtist.isCompleted())
         {
             System.out.println("You haven't finished all albums yet.");
             return;
@@ -72,13 +72,16 @@ public class Media {
 
     public void setRating(int rating)
     {
-        if(status.equalsIgnoreCase("Completed"))
+        if(status == Status.COMPLETED)
         {
-            this.rating = rating; // DONT FORGET TO ADD LOWER/UPPER BOUND IF LIKE HANGGANG 1-5 STARS LNG PDE
+            if(rating >= 1 && rating <= 5)
+                this.rating = rating;
+            else
+                System.out.println("input a number between 1 to 5 only")
         }
         else
         {
-            System.out.println("You still havent completed this entry");
+            System.out.println("You still haven't completed this entry");
         }
     }
 
@@ -90,13 +93,13 @@ public class Media {
 
     public void setReview(String review)
     {
-        if(status.equalsIgnoreCase("Completed"))
+        if(status == Status.COMPLETED)
         {
             this.review = review;
         }
         else
         {
-            System.out.println("You still havent completed this entry");
+            System.out.println("You still haven't completed this entry");
         }
     }
 
@@ -119,7 +122,7 @@ public class Media {
         else
             info += musicArtist.displayInfo();
 
-        if(status.equals("Completed"))
+        if(status == Status.COMPLETED)
         {
             info += "\nRating: " + rating;
             info += "\nReview: " + review;
