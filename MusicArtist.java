@@ -29,8 +29,9 @@ public class MusicArtist {
         return albums;
     }
 
-    public void addAlbum(Album album)
+    public void addAlbum(String title, String genre, int year, int trackCount)
     {
+        Album album = new Album(title, genre, year, trackCount);
         albums.add(album);
     }
 
