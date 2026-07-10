@@ -44,7 +44,7 @@ public class Driver {
         System.out.println("                -->    (E) EXIT");
         System.out.print("Enter choice: ");
         String libChoice = scanner.nextLine();
-        while(!libChoice.equalsIgnoreCase("A") && !libChoice.equalsIgnoreCase("B") && !libChoice.equalsIgnoreCase("C") && !libChoice.equalsIgnoreCase("D"))
+        while(!libChoice.equalsIgnoreCase("A") && !libChoice.equalsIgnoreCase("B") && !libChoice.equalsIgnoreCase("C") && !libChoice.equalsIgnoreCase("D") && !libChoice.equalsIgnoreCase("E"))
         {
             System.out.println("Please enter valid choice.");
             System.out.print("Enter choice: ");
@@ -374,7 +374,64 @@ public class Driver {
                                 Driver.displayFilteredResults(filteredResults);
                                 break;
 
+                            // rate review completed entries
                             case "D" :
+                                Interface.divider2();
+                                Interface.printCentered("=== RATE/REVIEW FROM COMPLETED LIBRARY ENTRIES ===");
+                                ArrayList<Media> completedEntries = library.filterByStatus(Status.COMPLETED);
+                                Driver.displayFilteredResults(completedEntries);
+
+                                if(!completedEntries.isEmpty())
+                                {
+                                    System.out.print("   -->    Enter title of entry to rate/review: ");
+                                    String rateTitle = scanner.nextLine();
+
+                                    Media rateEntry = null;
+                                    for (Media media : completedEntries)
+                                    {
+                                        if (media.getTitle().equalsIgnoreCase(rateTitle))
+                                            rateEntry = media;
+                                    }
+
+                                    // not found
+                                    while (rateEntry == null)
+                                    {
+                                        System.out.println("ERROR: Entry not found among completed entries list.");
+                                        System.out.print("   -->    Enter title of entry to rate/review: ");
+                                        rateTitle = scanner.nextLine();
+
+                                        for (Media media : completedEntries)
+                                        {
+                                            if (media.getTitle().equalsIgnoreCase(rateTitle))
+                                                rateEntry = media;
+                                        }
+                                    }
+
+                                    System.out.println("");
+                                    Interface.printCentered("MEDIA SUCCESFULLY FOUND");
+                                    Interface.divider2();
+                                    System.out.print("   -->    Enter rating (1-5): ");
+                                    int rating = scanner.nextInt();
+                                    scanner.nextLine();
+                                    while (!rateEntry.setRating(rating))
+                                    {
+                                        System.out.print("   -->    Enter rating (1-5): ");
+                                        rating = scanner.nextInt();
+                                        scanner.nextLine();
+                                    }
+
+                                    System.out.print("   -->    Enter review: ");
+                                    String review = scanner.nextLine();
+                                    rateEntry.setReview(review);
+
+                                    Interface.divider2();
+                                    Interface.printCentered("=== RATING/REVIEW UPDATED! ===");
+                                    Driver.displayFilteredResults(completedEntries);
+                                }
+                                break;
+
+
+                            case "E" :
                                 exitLibrary = true;
                                 break;
                         } // switch libchoice

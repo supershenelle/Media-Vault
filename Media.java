@@ -74,19 +74,16 @@ public class Media {
         this.status = status;
     }
 
-    public void setRating(int rating)
+    public boolean setRating(int rating)
     {
-        if(status == Status.COMPLETED)
+        if (rating < 1 || rating > 5)
         {
-            if(rating >= 1 && rating <= 5)
-                this.rating = rating;
-            else
-                System.out.println("input a number between 1 to 5 only");
+            System.out.println("ERROR: Input a number between 1 to 5 only");
+            return false;
         }
-        else
-        {
-            System.out.println("You still haven't completed this entry");
-        }
+
+        this.rating = rating;
+        return true;
     }
 
     public int getRating()
@@ -97,14 +94,7 @@ public class Media {
 
     public void setReview(String review)
     {
-        if(status == Status.COMPLETED)
-        {
-            this.review = review;
-        }
-        else
-        {
-            System.out.println("You still haven't completed this entry");
-        }
+        this.review = review;
     }
 
     public String getTitle()
