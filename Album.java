@@ -62,10 +62,10 @@ public class Album {
 
     public void setSongsListened(int songsListened)
     {
-        if(songsListened <= trackCount)
+        if(songsListened <= trackCount && songsListened >= 0)
             this.songsListened = songsListened;
         else
-            System.out.printf("input must be less than or equal to" + trackCount);
+            System.out.printf("input must be between 0 and " + trackCount);
     }
 
 
