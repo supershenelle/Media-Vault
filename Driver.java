@@ -6,13 +6,22 @@ public class Driver {
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        Profile profile = null;
+        Library library = null;
+        boolean profileCreated = false;
         boolean running = true;
+
+        String[] films = new String[0];
+        String[] games = new String[0];
+        String[] music = new String[0];
 
         while (running)
         {
             Interface.displayTitle();
             Interface.printCentered("=== MAIN NAVIGATION: CHOOSE OPTION ===");
-            Interface.printCentered("(1) CREATE PROFILE      (2) EXIT PROGRAM");
+            Interface.printCentered("(1) CREATE NEW PROFILE      (2) EXIT PROGRAM");
+            if (profileCreated)
+                Interface.printCentered("(3) VIEW CURRENT PROFILE");
             System.out.println("");
             System.out.print("Enter input: ");
             String input = scanner.nextLine();
@@ -28,11 +37,12 @@ public class Driver {
                     String bio = scanner.nextLine();
 
                     // set up everything for new profile
-                    Profile profile = new Profile(username, displayName, bio);
-                    Library library = new Library();
-                    String[] films = library.getRecentTitles("Movie");
-                    String[] games = library.getRecentTitles("Videogame");
-                    String[] music = library.getRecentTitles("Music Artist");
+                    profile = new Profile(username, displayName, bio);
+                    profileCreated = true;
+                    library = new Library();
+                    films = library.getRecentTitles("Movie");
+                    games = library.getRecentTitles("Videogame");
+                    music = library.getRecentArtistDiscography("Music Artist");
 
                     Interface.displayProfile(scanner, profile, films, games, music);
                     boolean exitLibrary = false;
@@ -69,9 +79,7 @@ public class Driver {
                                         String filmTitle = scanner.nextLine();
                                         System.out.print("   -->    DIRECTOR: ");
                                         String director = scanner.nextLine();
-                                        System.out.print("   -->    YEAR RELEASED: ");
-                                        int filmYear = scanner.nextInt();
-                                        scanner.nextLine();
+                                        int filmYear = Interface.getIntInput(scanner, "   -->    YEAR RELEASED: ");
                                         System.out.print("   -->    DESCRIPTION: ");
                                         String filmDescription = scanner.nextLine();
                                         Status statusFilm = Interface.getInputStatusAddMedia(scanner);
@@ -94,14 +102,10 @@ public class Driver {
                                         String gameTitle = scanner.nextLine();
                                         System.out.print("   -->    DEVELOPER: ");
                                         String developer = scanner.nextLine();
-                                        System.out.print("   -->    YEAR RELEASED: ");
-                                        int gameYear = scanner.nextInt();
-                                        scanner.nextLine();
+                                        int gameYear = Interface.getIntInput(scanner, "   -->    YEAR RELEASED: ");
                                         System.out.print("   -->    DESCRIPTION: ");
                                         String gameDescription = scanner.nextLine();
-                                        System.out.print("   -->    HOURS PLAYED: ");
-                                        int hoursPlayed = scanner.nextInt();
-                                        scanner.nextLine();
+                                        int hoursPlayed = Interface.getIntInput(scanner, "   -->    HOURS PLAYED: ");
                                         Status statusGame = Interface.getInputStatusAddMedia(scanner);
 
                                         Videogame game = new Videogame(gameTitle, developer, gameYear, gameDescription, hoursPlayed);
@@ -128,9 +132,7 @@ public class Driver {
                                         MusicArtist musicArtist = new MusicArtist(artistName, artistDescription);
 
                                         // get ilan albums meron sa artist na yyun
-                                        System.out.print("   -->    HOW MANY ALBUMS DOES THIS ARTIST HAVE: ");
-                                        int albumCount = scanner.nextInt();
-                                        scanner.nextLine();
+                                        int albumCount = Interface.getIntInput(scanner, "   -->    HOW MANY ALBUMS DOES THIS ARTIST HAVE: ");
                                         // create the albums (SHEN KAW NA BAHALA SA INTERFACE NETO)
                                         for(int i = 1; i <= albumCount; i++)
                                         {
@@ -142,12 +144,9 @@ public class Driver {
                                             System.out.print("   -->    Genre: ");
                                             String genre = scanner.nextLine();
 
-                                            System.out.print("   -->    Year: ");
-                                            int year = scanner.nextInt();
+                                            int year = Interface.getIntInput(scanner, "   -->    Year: ");
 
-                                            System.out.print("   -->    Number of tracks: ");
-                                            int tracks = scanner.nextInt();
-                                            scanner.nextLine();
+                                            int tracks = Interface.getIntInput(scanner, "   -->    Number of tracks: ");
 
                                             Album album = new Album(title, genre, year, tracks);
 
@@ -166,7 +165,7 @@ public class Driver {
                                 } // switch mediaChoice
                                 films = library.getRecentTitles("Movie");
                                 games = library.getRecentTitles("Videogame");
-                                music = library.getRecentTitles("Music Artist");
+                                music = library.getRecentArtistDiscography("Music Artist");
                                 Interface.displayProfile(scanner, profile, films, games, music);
                                 break;
 
@@ -234,7 +233,7 @@ public class Driver {
                                 System.out.println("");
                                 films = library.getRecentTitles("Movie");
                                 games = library.getRecentTitles("Videogame");
-                                music = library.getRecentTitles("Music Artist");
+                                music = library.getRecentArtistDiscography("Music Artist");
                                 Interface.displayProfile(scanner, profile, films, games, music);
                                 break;
 
@@ -316,7 +315,7 @@ public class Driver {
                                     while (rateEntry == null)
                                     {
                                         System.out.println("ERROR: Entry not found among completed entries list.");
-                                        System.out.print("   -->    Enter title of entry to rate/review: ");
+                                        System.out.print("   -->    Enter artist/title of entry to rate/review: ");
                                         rateTitle = scanner.nextLine();
 
                                         for (Media media : completedEntries)
@@ -329,14 +328,10 @@ public class Driver {
                                     System.out.println("");
                                     Interface.printCentered("MEDIA SUCCESFULLY FOUND");
                                     Interface.divider2();
-                                    System.out.print("   -->    Enter rating (1-5): ");
-                                    int rating = scanner.nextInt();
-                                    scanner.nextLine();
+                                    int rating = Interface.getIntInput(scanner, "   -->    Enter rating (1-5): ");
                                     while (!rateEntry.setRating(rating))
                                     {
-                                        System.out.print("   -->    Enter rating (1-5): ");
-                                        rating = scanner.nextInt();
-                                        scanner.nextLine();
+                                        rating = Interface.getIntInput(scanner, "   -->    Enter rating (1-5): ");
                                     }
 
                                     System.out.print("   -->    Enter review: ");
@@ -456,14 +451,10 @@ public class Driver {
                                 }
 
                                 // display and get how many songs listened sa album na yun
-                                System.out.print("   -->    Enter total songs listened (0-" + logAlbum.getTrackCount() + "): ");
-                                int songsListened = scanner.nextInt();
-                                scanner.nextLine();
+                                int songsListened = Interface.getIntInput(scanner, "   -->    Enter total songs listened (0-" + logAlbum.getTrackCount() + "): ");
                                 while (songsListened < 0 || songsListened > logAlbum.getTrackCount()) //input validation
                                 {
-                                    System.out.print("   -->    Enter total songs listened (0-" + logAlbum.getTrackCount() + "): ");
-                                    songsListened = scanner.nextInt();
-                                    scanner.nextLine();
+                                    songsListened = Interface.getIntInput(scanner, "   -->    Enter total songs listened (0-" + logAlbum.getTrackCount() + "): ");
                                 }
                                 // set songs listened
                                 logAlbum.setSongsListened(songsListened);
@@ -489,6 +480,16 @@ public class Driver {
                                 break;
                         } // switch libchoice
                     } // while
+                    break;
+
+                case "3":
+                    if (!profileCreated)
+                    {
+                        System.out.println("Please create a profile first.");
+                        break;
+                    }
+
+                    Interface.displayProfile(scanner, profile, films, games, music);
                     break;
 
                 case "2":

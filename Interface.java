@@ -49,15 +49,14 @@ public class Interface {
         divider1();
         System.out.println("");
 
-        printCentered("MOST RECENT FILM ACTIVITY");
+        printCentered("### -- MOST RECENT FILM ACTIVITY -- ###");
         printBoxes(films);
 
-        printCentered("MOST RECENT VIDEO GAME ACTIVITY");
+        printCentered("### -- MOST RECENT VIDEO GAME ACTIVITY -- ###");
         printBoxes(games);
 
-        printCentered("MOST RECENT ARTIST DISCOGRAPHY ACTIVITY");
-        System.out.println("TOP ALBUM: ");
-        System.out.println("TOP SONGS: \n");
+        printCentered("### -- MOST RECENT ARTIST DISCOGRAPHY ACTIVITY -- ###");
+        printBoxes(music);
 
         divider1();
     }
@@ -66,13 +65,12 @@ public class Interface {
     public static String libraryMenu(Scanner scanner)
     {
         printCentered("YOUR LIBRARY");
-        System.out.println("                -->    (A) ADD MEDIA TO LIBRARY");
-        System.out.println("                -->    (B) REMOVE MEDIA FROM LIBRARY");
-        System.out.println("                -->    (C) DISPLAY/FILTER ENTRIES FROM LIBRARY");
-        System.out.println("                -->    (D) RATE AND REVIEW COMPLETED ENTRIES");
-        System.out.println("                -->    (E) UPDATE MEDIA ENTRIES STATUS");
-        System.out.println("                -->    (F) Listen to songs/album idk brah");
-        System.out.println("                -->    (G) EXIT");
+        System.out.println("   -->    (A) ADD MEDIA                  -->    (E) UPDATE MEDIA ENTRIES STATUS");
+        System.out.println("   -->    (B) REMOVE MEDIA               -->    (F) UPDATE ARTIST DISCOGRAPHY LOGS");
+        System.out.println("   -->    (C) DISPLAY/FILTER ENTRIES     -->    (G) BACK TO MAIN NAVIGATION/PROFILE");
+        System.out.println("   -->    (D) RATE AND REVIEW COMPLETED ENTRIES");
+    
+        System.out.println("");
         System.out.print("Enter choice: ");
         String libChoice = scanner.nextLine();
         while(!libChoice.equalsIgnoreCase("A") && !libChoice.equalsIgnoreCase("B") && !libChoice.equalsIgnoreCase("C") && !libChoice.equalsIgnoreCase("D") && !libChoice.equalsIgnoreCase("E") && !libChoice.equalsIgnoreCase("F") && !libChoice.equalsIgnoreCase("G"))
@@ -117,6 +115,22 @@ public class Interface {
 
     }
 
+    // kasi yung scanner.nextInt() nagkakaroon ng issue na magtthrow so eto nlng.
+    public static int getIntInput(Scanner scanner, String prompt)
+    {
+        System.out.print(prompt);
+        while(!scanner.hasNextInt())
+        {
+            System.out.println("ERROR: Please enter valid input.");
+            scanner.nextLine();
+            System.out.print(prompt);
+        }
+
+        int value = scanner.nextInt();
+        scanner.nextLine();
+        return value;
+    }
+
     public static String mediaTypeFromChoice(String choice)
     {
         switch(choice)
@@ -153,14 +167,14 @@ public class Interface {
         System.out.println("");
     }
 
-    public static void printBoxes(String[] films)
+    public static void printBoxes(String[] media)
     {
         int width = 20;
         String border = "+" + "-".repeat(width + 4) + "+";
 
-        String t1 = getTitle(films, 0);
-        String t2 = getTitle(films, 1);
-        String t3 = getTitle(films, 2);
+        String t1 = getTitle(media, 0);
+        String t2 = getTitle(media, 1);
+        String t3 = getTitle(media, 2);
 
         // if ever mag exceed yung title sa box
         if (t1.length() > width) t1 = t1.substring(0, width - 3) + "...";
@@ -181,6 +195,7 @@ public class Interface {
     // if ever wala pa favorites so maging null muna sya
     private static String getTitle(String[] filmTitle, int index)
     {
+        // diba 0-2 lang so magsstop na sya pag sobra na
         if (index >= filmTitle.length || filmTitle[index] == null) {
             return "";
         }

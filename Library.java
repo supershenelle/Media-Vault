@@ -77,13 +77,33 @@ public class Library {
 
                 else if (type.equals("Videogame"))
                     titles.add(media.getTitle());
-
-                else if (type.equals("Music Artist"))
-                    titles.add(media.getTitle());
             }
         }
 
         return titles.toArray(new String[0]);
+    }
+
+    public String[] getRecentArtistDiscography(String type)
+    {
+        List<String> discography = new ArrayList<>();
+
+        for (int i = entries.size() - 1; i >= 0 && discography.size() < 3; i--)
+        {
+            Media media = entries.get(i);
+
+            if (media.getType().equals(type))
+            {
+                MusicArtist artist = media.getMusicArtist();
+
+                for (int j = artist.getAlbums().size() - 1; j >= 0 && discography.size() < 3; j--)
+                {
+                    Album album = artist.getAlbums().get(j);
+                    discography.add(artist.getName() + ": " + album.getTitle());
+                }
+            }
+        }
+
+        return discography.toArray(new String[0]);
     }
 
     public void addEntry(Media media)
