@@ -41,7 +41,8 @@ public class Driver {
         System.out.println("                -->    (B) REMOVE MEDIA FROM LIBRARY");
         System.out.println("                -->    (C) DISPLAY/FILTER ENTRIES FROM LIBRARY");
         System.out.println("                -->    (D) RATE AND REVIEW COMPLETED ENTRIES");
-        System.out.println("                -->    (E) EXIT");
+        System.out.println("                -->    (E) UPDATE MEDIA ENTRIES STATUS");
+        System.out.println("                -->    (F) EXIT");
         System.out.print("Enter choice: ");
         String libChoice = scanner.nextLine();
         while(!libChoice.equalsIgnoreCase("A") && !libChoice.equalsIgnoreCase("B") && !libChoice.equalsIgnoreCase("C") && !libChoice.equalsIgnoreCase("D") && !libChoice.equalsIgnoreCase("E"))
@@ -54,12 +55,29 @@ public class Driver {
         return libChoice.toUpperCase();
     }
 
+    // update status
     public static Status getInputStatus(Scanner scanner)
     {
         System.out.println("   -->    STATUS:\n      -- (1) Planning\n      -- (2) In Progress\n      -- (3) Finished");
         System.out.print("Enter status choice: ");
         String choice = scanner.nextLine();
         while(!choice.equals("1") && !choice.equals("2") && !choice.equals("3"))
+        {
+            System.out.println("Please enter valid choice.");
+            System.out.print("Enter status choice: ");
+            choice = scanner.nextLine();
+        }
+        return Status.fromChoice(choice);
+
+    }
+
+    // eto naman for adding media entry cuz bawal completed agad
+    public static Status getInputStatusAddMedia(Scanner scanner)
+    {
+        System.out.println("   -->    STATUS:\n      -- (1) Planning\n      -- (2) In Progress");
+        System.out.print("Enter status choice: ");
+        String choice = scanner.nextLine();
+        while(!choice.equals("1") && !choice.equals("2"))
         {
             System.out.println("Please enter valid choice.");
             System.out.print("Enter status choice: ");
@@ -174,7 +192,7 @@ public class Driver {
                                         scanner.nextLine();
                                         System.out.print("   -->    DESCRIPTION: ");
                                         String filmDescription = scanner.nextLine();
-                                        Status statusFilm = Driver.getInputStatus(scanner);
+                                        Status statusFilm = Driver.getInputStatusAddMedia(scanner);
                                         Movie movie = new Movie(filmTitle, director, filmYear, filmDescription);
                                         Media movieEntry = new Media(movie, statusFilm);
                                         library.addEntry(movieEntry);
@@ -202,7 +220,7 @@ public class Driver {
                                         System.out.print("   -->    HOURS PLAYED: ");
                                         int hoursPlayed = scanner.nextInt();
                                         scanner.nextLine();
-                                        Status statusGame = Driver.getInputStatus(scanner);
+                                        Status statusGame = Driver.getInputStatusAddMedia(scanner);
 
                                         Videogame game = new Videogame(gameTitle, developer, gameYear, gameDescription, hoursPlayed);
                                         Media gameEntry = new Media(game, statusGame);
@@ -251,7 +269,7 @@ public class Driver {
                                             musicArtist.addAlbum(album);
                                         }
 
-                                        Status statusArtist = Driver.getInputStatus(scanner);
+                                        Status statusArtist = Driver.getInputStatusAddMedia(scanner);
                                         Media artistEntry = new Media(musicArtist, statusArtist);
                                         library.addEntry(artistEntry);
                                         Interface.divider2();
@@ -431,7 +449,68 @@ public class Driver {
                                 break;
 
 
-                            case "E" :
+                            case "E":
+                                // display kung anong media type iuupdate yung status
+                                Interface.divider2();
+                                Interface.printCentered("=== UPDATE STATUS OF MEDIA ENTRY ===");
+                                Interface.printCentered("(1) FILMS           (2) GAMES              (3) DISCOGRAPHY");
+                                System.out.print("Enter choice: ");
+                                String updateChoice = scanner.nextLine();
+
+                                // kunin yung choice
+                                while(!updateChoice.equals("1") && !updateChoice.equals("2") && !updateChoice.equals("3"))
+                                {
+                                    System.out.println("Please enter valid choice.");
+                                    System.out.print("Enter choice: ");
+                                    updateChoice = scanner.nextLine();
+                                }
+                                System.out.println("");
+
+                                //convert it into media type attribute
+                                String updateType = Driver.mediaTypeFromChoice(updateChoice);
+
+                                // display the chosen media type
+                                if (updateType.equals("Movie"))
+                                    library.displayMovies();
+                                else if (updateType.equals("Videogame"))
+                                    library.displayGames();
+                                else
+                                    library.displayArtists();
+                                System.out.println("");
+
+                                // kunin yung media entry na yun
+                                System.out.print("   -->    Enter title of entry to update: ");
+                                String updateTitle = scanner.nextLine();
+                                Media updateEntry = library.findEntry(updateType, updateTitle); //nakuha na yung media entry
+
+                                //input validation
+                                while (updateEntry == null)
+                                {
+                                    System.out.println("ERROR: Entry not found in this category.");
+                                    System.out.print("   -->    Enter title of entry to update: ");
+                                    updateTitle = scanner.nextLine();
+                                    updateEntry = library.findEntry(updateType, updateTitle);
+                                }
+
+                                // display current status nung napiling media
+                                Interface.divider2();
+                                Interface.printCentered("CURRENT STATUS: " + updateEntry.getStatus().getDisplay());
+
+                                // get new status
+                                Status newStatus = Driver.getInputStatus(scanner);
+                                boolean statusUpdated = updateEntry.setStatus(newStatus);
+
+                                // display if naupdate status
+                                Interface.divider2();
+                                if (statusUpdated)
+                                    Interface.printCentered("=== STATUS SUCCESSFULLY UPDATED TO " + newStatus.getDisplay().toUpperCase() + "! ===");
+                                else
+                                    Interface.printCentered("!!! STATUS NOT UPDATED !!!");
+                                Interface.divider1();
+                                System.out.println("");
+                                break;
+
+                            case "F" :
                                 exitLibrary = true;
                                 break;
                         } // switch libchoice

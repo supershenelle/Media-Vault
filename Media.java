@@ -60,7 +60,7 @@ public class Media {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public boolean setStatus(Status status) {
         // check if music artist, since pede mo lang sya marate if completed na albums
         if(type.equals("Music Artist"))
         {
@@ -68,10 +68,11 @@ public class Media {
             {
                 System.out.println("You haven't finished all albums yet.");
                 musicArtist.getProgress();
-                return;
+                return false;
             }
         }
         this.status = status;
+        return true;
     }
 
     public boolean setRating(int rating)

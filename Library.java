@@ -107,15 +107,6 @@ public class Library {
         return entries;
     }
 
-    public Media searchEntry(String title)
-    {
-        for (Media media : entries)
-        {
-            if (media.getType().equals("Movie") && media.getMovie().getTitle().equalsIgnoreCase(title))
-                return media;
-        }
-        return null;
-    }
 
     public Media findEntry(String type, String title)
     {
