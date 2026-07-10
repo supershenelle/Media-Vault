@@ -201,4 +201,18 @@ public class Interface {
         }
         return filmTitle[index];
     }
+
+    public static String getMediaTypeChoice(Scanner scanner)
+    {
+        printCentered("(1) FILMS           (2) GAMES              (3) DISCOGRAPHY");
+        System.out.print("Enter choice: ");
+        String choice = scanner.nextLine();
+        while(!choice.equals("1") && !choice.equals("2") && !choice.equals("3"))
+        {
+            System.out.println("Please enter valid choice.");
+            System.out.print("Enter choice: ");
+            choice = scanner.nextLine();
+        }
+        return mediaTypeFromChoice(choice);
+    }
 }

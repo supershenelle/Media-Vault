@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
 
 public class Album {
     private String title;
@@ -62,13 +60,6 @@ public class Album {
         return songsListened;
     }
 
-    public void setSongsListened()
-    {
-        if (songsListened < trackCount)
-            songsListened++;
-    }
-
-    // para di paisa-isa/increment yung songs listened
     public void setSongsListened(int songsListened)
     {
         if(songsListened <= trackCount)

@@ -56,20 +56,12 @@ public class Driver {
                             case "A":
                                 Interface.divider2();
                                 Interface.printCentered("ENTER MEDIA TYPE");
-                                Interface.printCentered("(1) FILMS           (2) GAMES              (3) DISCOGRAPHY");
-                                System.out.print("Enter choice: ");
-                                String mediaChoice = scanner.nextLine();
-                                while(!mediaChoice.equals("1") && !mediaChoice.equals("2") && !mediaChoice.equals("3"))
-                                {
-                                    System.out.println("Please enter valid choice.");
-                                    System.out.print("Enter choice: ");
-                                    mediaChoice = scanner.nextLine();
-                                }
+                                String mediaChoice =Interface.getMediaTypeChoice(scanner);
                                 System.out.println("");
 
                                 switch(mediaChoice)
                                 {
-                                    case "1":
+                                    case "Movie":
                                         System.out.println("");
                                         Interface.divider1();
                                         Interface.printCentered("=== ADDING FILM ENTRY ===");
@@ -92,7 +84,7 @@ public class Driver {
                                         System.out.println("");
                                         break;
 
-                                    case "2":
+                                    case "Videogame":
                                         System.out.println("");
                                         Interface.divider1();
                                         Interface.printCentered("=== ADDING GAME ENTRY ===");
@@ -117,7 +109,7 @@ public class Driver {
                                         System.out.println("");
                                         break;
 
-                                    case "3":
+                                    case "Music Artist":
                                         // display
                                         System.out.println("");
                                         Interface.divider1();
@@ -179,18 +171,8 @@ public class Driver {
                                 // display and get anong media type ireremove
                                 Interface.divider2();
                                 Interface.printCentered("REMOVE MEDIA TYPE");
-                                Interface.printCentered("(1) FILMS           (2) GAMES              (3) DISCOGRAPHY");
-                                System.out.print("Enter choice: ");
-                                String removeChoice = scanner.nextLine();
-                                while(!removeChoice.equals("1") && !removeChoice.equals("2") && !removeChoice.equals("3"))
-                                {
-                                    System.out.println("Please enter valid choice.");
-                                    System.out.print("Enter choice: ");
-                                    removeChoice = scanner.nextLine();
-                                }
+                                String removeType = Interface.getMediaTypeChoice(scanner);
                                 System.out.println("");
-                                // convert the choice to media type attribute
-                                String removeType = Interface.mediaTypeFromChoice(removeChoice);
 
                                 // cuz string is immutable, magagalaw remove type variable so we make anotha variable for displaying
                                 // DISPLAY PURPOSES ONLY
@@ -279,17 +261,9 @@ public class Driver {
                                 else
                                 {
                                     // display/ kunin anong media type ififilter
-                                    Interface.printCentered("(1) FILMS           (2) GAMES              (3) DISCOGRAPHY");
-                                    System.out.print("Enter choice: ");
-                                    String filterTypeChoice = scanner.nextLine();
-                                    while(!filterTypeChoice.equals("1") && !filterTypeChoice.equals("2") && !filterTypeChoice.equals("3"))
-                                    {
-                                        System.out.println("Please enter valid choice.");
-                                        System.out.print("Enter choice: ");
-                                        filterTypeChoice = scanner.nextLine();
-                                    }
+                                    String filterType= Interface.getMediaTypeChoice(scanner);
+
                                     // return the filtered media type
-                                    String filterType = Interface.mediaTypeFromChoice(filterTypeChoice);
                                     filteredResults = library.filterByType(filterType);
                                 }
 
@@ -354,21 +328,8 @@ public class Driver {
                                 // display kung anong media type iuupdate yung status
                                 Interface.divider2();
                                 Interface.printCentered("=== UPDATE STATUS OF MEDIA ENTRY ===");
-                                Interface.printCentered("(1) FILMS           (2) GAMES              (3) DISCOGRAPHY");
-                                System.out.print("Enter choice: ");
-                                String updateChoice = scanner.nextLine();
-
-                                // kunin yung choice
-                                while(!updateChoice.equals("1") && !updateChoice.equals("2") && !updateChoice.equals("3"))
-                                {
-                                    System.out.println("Please enter valid choice.");
-                                    System.out.print("Enter choice: ");
-                                    updateChoice = scanner.nextLine();
-                                }
+                                String updateType = Interface.getMediaTypeChoice(scanner);
                                 System.out.println("");
-
-                                //convert it into media type attribute
-                                String updateType = Interface.mediaTypeFromChoice(updateChoice);
 
                                 // display the chosen media type
                                 if (updateType.equals("Movie"))
