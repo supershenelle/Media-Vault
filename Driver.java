@@ -42,10 +42,11 @@ public class Driver {
         System.out.println("                -->    (C) DISPLAY/FILTER ENTRIES FROM LIBRARY");
         System.out.println("                -->    (D) RATE AND REVIEW COMPLETED ENTRIES");
         System.out.println("                -->    (E) UPDATE MEDIA ENTRIES STATUS");
-        System.out.println("                -->    (F) EXIT");
+        System.out.println("                -->    (F) Listen to songs/album idk brah");
+        System.out.println("                -->    (G) EXIT");
         System.out.print("Enter choice: ");
         String libChoice = scanner.nextLine();
-        while(!libChoice.equalsIgnoreCase("A") && !libChoice.equalsIgnoreCase("B") && !libChoice.equalsIgnoreCase("C") && !libChoice.equalsIgnoreCase("D") && !libChoice.equalsIgnoreCase("E"))
+        while(!libChoice.equalsIgnoreCase("A") && !libChoice.equalsIgnoreCase("B") && !libChoice.equalsIgnoreCase("C") && !libChoice.equalsIgnoreCase("D") && !libChoice.equalsIgnoreCase("E") && !libChoice.equalsIgnoreCase("F") && !libChoice.equalsIgnoreCase("G"))
         {
             System.out.println("Please enter valid choice.");
             System.out.print("Enter choice: ");
@@ -529,7 +530,80 @@ public class Driver {
                                 System.out.println("");
                                 break;
 
-                            case "F" :
+                            case "F":
+                                // display
+                                Interface.divider2();
+                                Interface.printCentered("=== LOG SONGS LISTENED (MUSIC ARTIST ALBUMS) ===");
+                                library.displayArtists();
+                                System.out.println("");
+
+                                // get/search artist media entry
+                                System.out.print("   -->    Enter artist name: ");
+                                String logArtistTitle = scanner.nextLine();
+                                Media logArtistEntry = library.findEntry("Music Artist", logArtistTitle);
+
+                                // input validation
+                                while (logArtistEntry == null)
+                                {
+                                    System.out.println("ERROR: Artist not found in library.");
+                                    System.out.print("   -->    Enter artist name: ");
+                                    logArtistTitle = scanner.nextLine();
+                                    logArtistEntry = library.findEntry("Music Artist", logArtistTitle);
+                                }
+
+                                // from the media class, kunin yung music artist class don
+                                MusicArtist logArtist = logArtistEntry.getMusicArtist();
+
+                                // display the albums
+                                Interface.divider2();
+                                Interface.printCentered("ALBUMS FOR " + logArtist.getName().toUpperCase());
+                                logArtist.displayAlbums();
+                                System.out.println("");
+
+                                // get album  to be updated
+                                System.out.print("   -->    Enter album title to update: ");
+                                String logAlbumTitle = scanner.nextLine();
+                                Album logAlbum = logArtist.findAlbum(logAlbumTitle);
+
+                                //input validation
+                                while (logAlbum == null)
+                                {
+                                    System.out.println("ERROR: Album not found for this artist.");
+                                    System.out.print("   -->    Enter album title to update: ");
+                                    logAlbumTitle = scanner.nextLine();
+                                    logAlbum = logArtist.findAlbum(logAlbumTitle);
+                                }
+
+                                // display and get how many songs listened sa album na yun
+                                System.out.print("   -->    Enter total songs listened (0-" + logAlbum.getTrackCount() + "): ");
+                                int songsListened = scanner.nextInt();
+                                scanner.nextLine();
+                                while (songsListened < 0 || songsListened > logAlbum.getTrackCount()) //input validation
+                                {
+                                    System.out.print("   -->    Enter total songs listened (0-" + logAlbum.getTrackCount() + "): ");
+                                    songsListened = scanner.nextInt();
+                                    scanner.nextLine();
+                                }
+                                // set songs listened
+                                logAlbum.setSongsListened(songsListened);
+
+                                // display
+                                Interface.divider2();
+                                if (logAlbum.isCompleted())
+                                    Interface.printCentered("=== ALBUM \"" + logAlbum.getTitle() + "\" COMPLETED! ===");
+                                else
+                                    Interface.printCentered("=== PROGRESS SAVED FOR \"" + logAlbum.getTitle() + "\" ===");
+
+                                if (logArtist.isCompleted())
+                                {
+                                    Interface.printCentered("ALL ALBUMS COMPLETE! You can now mark " + logArtist.getName() + " as Completed via option (E).");
+                                }
+                                Interface.divider1();
+                                System.out.println("");
+                                break;
+
+
+                            case "G" :
                                 exitLibrary = true;
                                 break;
                         } // switch libchoice

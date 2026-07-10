@@ -77,7 +77,33 @@ public class MusicArtist {
 
         return completed + "/" + albums.size();
     }
-    
+
+    public Album findAlbum(String title)
+    {
+        for (Album album : albums)
+        {
+            if (album.getTitle().equalsIgnoreCase(title))
+                return album;
+        }
+        return null;
+    }
+
+    public void displayAlbums()
+    {
+        for (Album album : albums)
+        {
+            System.out.print("   -> " + album.getTitle() + " (" + album.getSongsListened() + "/" + album.getTrackCount() + " tracks");
+
+            if (album.isCompleted())
+            {
+                System.out.print(", COMPLETED");
+            }
+
+            System.out.println(")");
+            System.out.println("");
+        }
+
+    }
     public String displayInfo()
     {
 
