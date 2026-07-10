@@ -39,7 +39,7 @@ public class Driver {
                     // set up everything for new profile
                     profile = new Profile(username, displayName, bio);
                     profileCreated = true;
-                    library = new Library();
+                    library = profile.getLibrary();
                     films = library.getRecentTitles("Movie");
                     games = library.getRecentTitles("Videogame");
                     music = library.getRecentArtistDiscography("Music Artist");

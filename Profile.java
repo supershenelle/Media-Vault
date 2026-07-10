@@ -14,6 +14,7 @@ public class Profile {
         this.username = username;
         this.displayName = displayName;
         this.bio = bio;
+        this.library = new Library();
     }
 
     public String getUsername()
@@ -29,6 +30,11 @@ public class Profile {
     public String getBio()
     {
         return bio;
+    }
+
+    public Library getLibrary()
+    {
+        return library;
     }
 
     public void addFavorite(Media media)
