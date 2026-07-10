@@ -232,17 +232,20 @@ public class Driver {
                                         break;
 
                                     case "3":
+                                        // display
                                         System.out.println("");
                                         Interface.divider1();
                                         Interface.printCentered("=== ADDING MUSIC ARTIST ENTRY ===");
                                         Interface.divider2();
 
+                                        // get name and description, then create musicArtist object
                                         System.out.print("   -->    ARTIST NAME: ");
                                         String artistName = scanner.nextLine();
                                         System.out.print("   -->    DESCRIPTION: ");
                                         String artistDescription = scanner.nextLine();
                                         MusicArtist musicArtist = new MusicArtist(artistName, artistDescription);
 
+                                        // get ilan albums meron sa artist na yyun
                                         System.out.print("   -->    HOW MANY ALBUMS DOES THIS ARTIST HAVE: ");
                                         int albumCount = scanner.nextInt();
                                         scanner.nextLine();
@@ -269,6 +272,7 @@ public class Driver {
                                             musicArtist.addAlbum(album);
                                         }
 
+                                        // get status nung artist then create the media and add it sa library
                                         Status statusArtist = Driver.getInputStatusAddMedia(scanner);
                                         Media artistEntry = new Media(musicArtist, statusArtist);
                                         library.addEntry(artistEntry);
@@ -286,6 +290,7 @@ public class Driver {
 
                             // remove entry
                             case "B" :
+                                // display and get anong media type ireremove
                                 Interface.divider2();
                                 Interface.printCentered("REMOVE MEDIA TYPE");
                                 Interface.printCentered("(1) FILMS           (2) GAMES              (3) DISCOGRAPHY");
@@ -298,11 +303,12 @@ public class Driver {
                                     removeChoice = scanner.nextLine();
                                 }
                                 System.out.println("");
-
+                                // convert the choice to media type attribute
                                 String removeType = Driver.mediaTypeFromChoice(removeChoice);
-                                // cuz string is immutable, magagalaw remove type variable so we make anotha variable for displaying
-                                String removeLabel;
 
+                                // cuz string is immutable, magagalaw remove type variable so we make anotha variable for displaying
+                                // DISPLAY PURPOSES ONLY
+                                String removeLabel;
                                 if (removeType.equals("Movie"))
                                     removeLabel = "FILM";
 
@@ -318,6 +324,7 @@ public class Driver {
                                 Interface.printCentered("=== REMOVING " + removeLabel + " ENTRY ===");
                                 Interface.divider2();
 
+                                // display yung napiling media type
                                 if (removeType.equals("Movie"))
                                     library.displayMovies();
                                 else if (removeType.equals("Videogame"))
@@ -326,12 +333,15 @@ public class Driver {
                                     library.displayArtists();
                                 System.out.println("");
 
+                                // display
                                 System.out.print("   -->    Enter " + removeLabel + " title to remove: ");
-                                String removeTitle = scanner.nextLine();
 
+                                // kunin anong title ireremove, then find it sa library then remove it sa library
+                                String removeTitle = scanner.nextLine();
                                 Media entryToRemove = library.findEntry(removeType, removeTitle);
                                 boolean isRemoved = library.removeEntry(entryToRemove);
 
+                                // display and checking if successful!
                                 Interface.divider2();
                                 if (isRemoved) {
                                     Interface.printCentered("=== ENTRY SUCCESSFULLY REMOVED! ===");
@@ -346,14 +356,16 @@ public class Driver {
                                 Driver.displayProfile(scanner, profile, films, games, music);
                                 break;
 
+                            // filter entry
                             case "C" :
+                                // display
                                 Interface.divider2();
                                 Interface.printCentered("=== DISPLAYING ALL ENTRIES FROM LIBRARY ===\n");
                                 library.displayMovies();
                                 library.displayGames();
                                 library.displayArtists();
 
-                                //filter entry
+                                // kunin if sosort ba by status or media type
                                 Interface.divider2();
                                 Interface.printCentered("FILTER MEDIA ENTRIES BY");
                                 Interface.printCentered("(1) STATUS           (2) MEDIA TYPE");
@@ -367,15 +379,20 @@ public class Driver {
                                 }
                                 System.out.println("");
 
+                                // dito istostore yung filtered medias (what if ideclare na lahat ng variables na gagamitin sa taas parang sa ccprog1 and 2?)
                                 ArrayList<Media> filteredResults;
+
+                                // sort by status
                                 if (filterChoice.equals("1"))
                                 {
-                                    Status filterStatus = Driver.getInputStatus(scanner);
-                                    filteredResults = library.filterByStatus(filterStatus);
+                                    Status filterStatus = Driver.getInputStatus(scanner); // kunin anong status
+                                    filteredResults = library.filterByStatus(filterStatus); // return the filtered status
                                 }
 
+                                // sort by media type
                                 else
                                 {
+                                    // display/ kunin anong media type ififilter
                                     Interface.printCentered("(1) FILMS           (2) GAMES              (3) DISCOGRAPHY");
                                     System.out.print("Enter choice: ");
                                     String filterTypeChoice = scanner.nextLine();
@@ -385,10 +402,12 @@ public class Driver {
                                         System.out.print("Enter choice: ");
                                         filterTypeChoice = scanner.nextLine();
                                     }
+                                    // return the filtered media type
                                     String filterType = Driver.mediaTypeFromChoice(filterTypeChoice);
                                     filteredResults = library.filterByType(filterType);
                                 }
 
+                                //display the filtered list
                                 Driver.displayFilteredResults(filteredResults);
                                 break;
 
