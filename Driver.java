@@ -1,128 +1,9 @@
 import java.util.Scanner;
-import java.util.List;
 import java.util.ArrayList;
 
 public class Driver {
 
     private static Scanner scanner = new Scanner(System.in);
-
-    //display profile function
-    public static void displayProfile(Scanner scanner, Profile profile, String[] films, String[] games, String[] music)
-    {
-        System.out.println("");
-        Interface.divider1();
-        Interface.printCentered("=== Y O U R   P R O F I L E ===");
-        Interface.divider1();
-        Interface.printCentered("USERNAME: @" + profile.getUsername());
-        Interface.divider2();
-        Interface.printCentered("DISPLAY NAME: " + profile.getDisplayName());
-        Interface.printCentered("BIO: " + profile.getBio());
-        Interface.divider1();
-        System.out.println("");
-
-        Interface.printCentered("MOST RECENT FILM ACTIVITY");
-        Interface.printBoxes(films);
-
-        Interface.printCentered("MOST RECENT VIDEO GAME ACTIVITY");
-        Interface.printBoxes(games);
-
-        Interface.printCentered("MOST RECENT ARTIST DISCOGRAPHY ACTIVITY");
-        System.out.println("TOP ALBUM: ");
-        System.out.println("TOP SONGS: \n");
-
-        Interface.divider1();
-    }
-
-    // display library para di paulit ulit sa switch
-    public static String libraryMenu(Scanner scanner)
-    {
-        Interface.printCentered("YOUR LIBRARY");
-        System.out.println("                -->    (A) ADD MEDIA TO LIBRARY");
-        System.out.println("                -->    (B) REMOVE MEDIA FROM LIBRARY");
-        System.out.println("                -->    (C) DISPLAY/FILTER ENTRIES FROM LIBRARY");
-        System.out.println("                -->    (D) RATE AND REVIEW COMPLETED ENTRIES");
-        System.out.println("                -->    (E) UPDATE MEDIA ENTRIES STATUS");
-        System.out.println("                -->    (F) Listen to songs/album idk brah");
-        System.out.println("                -->    (G) EXIT");
-        System.out.print("Enter choice: ");
-        String libChoice = scanner.nextLine();
-        while(!libChoice.equalsIgnoreCase("A") && !libChoice.equalsIgnoreCase("B") && !libChoice.equalsIgnoreCase("C") && !libChoice.equalsIgnoreCase("D") && !libChoice.equalsIgnoreCase("E") && !libChoice.equalsIgnoreCase("F") && !libChoice.equalsIgnoreCase("G"))
-        {
-            System.out.println("Please enter valid choice.");
-            System.out.print("Enter choice: ");
-            libChoice = scanner.nextLine();
-        }
-        System.out.println("");
-        return libChoice.toUpperCase();
-    }
-
-    // update status
-    public static Status getInputStatus(Scanner scanner)
-    {
-        System.out.println("   -->    STATUS:\n      -- (1) Planning\n      -- (2) In Progress\n      -- (3) Finished");
-        System.out.print("Enter status choice: ");
-        String choice = scanner.nextLine();
-        while(!choice.equals("1") && !choice.equals("2") && !choice.equals("3"))
-        {
-            System.out.println("Please enter valid choice.");
-            System.out.print("Enter status choice: ");
-            choice = scanner.nextLine();
-        }
-        return Status.fromChoice(choice);
-
-    }
-
-    // eto naman for adding media entry cuz bawal completed agad
-    public static Status getInputStatusAddMedia(Scanner scanner)
-    {
-        System.out.println("   -->    STATUS:\n      -- (1) Planning\n      -- (2) In Progress");
-        System.out.print("Enter status choice: ");
-        String choice = scanner.nextLine();
-        while(!choice.equals("1") && !choice.equals("2"))
-        {
-            System.out.println("Please enter valid choice.");
-            System.out.print("Enter status choice: ");
-            choice = scanner.nextLine();
-        }
-        return Status.fromChoice(choice);
-
-    }
-
-    public static String mediaTypeFromChoice(String choice)
-    {
-        switch(choice)
-        {
-            case "1":
-                return "Movie";
-            case "2":
-                return "Videogame";
-            case "3":
-                return "Music Artist";
-        }
-        return null;
-    }
-
-    public static void displayFilteredResults(ArrayList<Media> results)
-    {
-        Interface.divider1();
-        Interface.printCentered("=== RESULTS (" + results.size() + " FOUND) ===");
-        Interface.divider2();
-
-        if (results.isEmpty())
-        {
-            Interface.printCentered("[ No matching entries found ]");
-        }
-        else
-        {
-            for (Media media : results)
-            {
-                System.out.println(media.displayInfo());
-                Interface.divider2();
-            }
-        }
-        Interface.divider1();
-        System.out.println("");
-    }
 
     public static void main(String[] args) {
         boolean running = true;
@@ -153,12 +34,12 @@ public class Driver {
                     String[] games = library.getRecentTitles("Videogame");
                     String[] music = library.getRecentTitles("Music Artist");
 
-                    Driver.displayProfile(scanner, profile, films, games, music);
+                    Interface.displayProfile(scanner, profile, films, games, music);
                     boolean exitLibrary = false;
 
                     while (!exitLibrary)
                     {
-                        String libChoice = Driver.libraryMenu(scanner);
+                        String libChoice = Interface.libraryMenu(scanner);
                         switch(libChoice)
                         {
                             // add entry
@@ -193,7 +74,7 @@ public class Driver {
                                         scanner.nextLine();
                                         System.out.print("   -->    DESCRIPTION: ");
                                         String filmDescription = scanner.nextLine();
-                                        Status statusFilm = Driver.getInputStatusAddMedia(scanner);
+                                        Status statusFilm = Interface.getInputStatusAddMedia(scanner);
                                         Movie movie = new Movie(filmTitle, director, filmYear, filmDescription);
                                         Media movieEntry = new Media(movie, statusFilm);
                                         library.addEntry(movieEntry);
@@ -221,7 +102,7 @@ public class Driver {
                                         System.out.print("   -->    HOURS PLAYED: ");
                                         int hoursPlayed = scanner.nextInt();
                                         scanner.nextLine();
-                                        Status statusGame = Driver.getInputStatusAddMedia(scanner);
+                                        Status statusGame = Interface.getInputStatusAddMedia(scanner);
 
                                         Videogame game = new Videogame(gameTitle, developer, gameYear, gameDescription, hoursPlayed);
                                         Media gameEntry = new Media(game, statusGame);
@@ -274,7 +155,7 @@ public class Driver {
                                         }
 
                                         // get status nung artist then create the media and add it sa library
-                                        Status statusArtist = Driver.getInputStatusAddMedia(scanner);
+                                        Status statusArtist = Interface.getInputStatusAddMedia(scanner);
                                         Media artistEntry = new Media(musicArtist, statusArtist);
                                         library.addEntry(artistEntry);
                                         Interface.divider2();
@@ -286,7 +167,7 @@ public class Driver {
                                 films = library.getRecentTitles("Movie");
                                 games = library.getRecentTitles("Videogame");
                                 music = library.getRecentTitles("Music Artist");
-                                Driver.displayProfile(scanner, profile, films, games, music);
+                                Interface.displayProfile(scanner, profile, films, games, music);
                                 break;
 
                             // remove entry
@@ -305,7 +186,7 @@ public class Driver {
                                 }
                                 System.out.println("");
                                 // convert the choice to media type attribute
-                                String removeType = Driver.mediaTypeFromChoice(removeChoice);
+                                String removeType = Interface.mediaTypeFromChoice(removeChoice);
 
                                 // cuz string is immutable, magagalaw remove type variable so we make anotha variable for displaying
                                 // DISPLAY PURPOSES ONLY
@@ -354,7 +235,7 @@ public class Driver {
                                 films = library.getRecentTitles("Movie");
                                 games = library.getRecentTitles("Videogame");
                                 music = library.getRecentTitles("Music Artist");
-                                Driver.displayProfile(scanner, profile, films, games, music);
+                                Interface.displayProfile(scanner, profile, films, games, music);
                                 break;
 
                             // filter entry
@@ -386,7 +267,7 @@ public class Driver {
                                 // sort by status
                                 if (filterChoice.equals("1"))
                                 {
-                                    Status filterStatus = Driver.getInputStatus(scanner); // kunin anong status
+                                    Status filterStatus = Interface.getInputStatus(scanner); // kunin anong status
                                     filteredResults = library.filterByStatus(filterStatus); // return the filtered status
                                 }
 
@@ -404,12 +285,12 @@ public class Driver {
                                         filterTypeChoice = scanner.nextLine();
                                     }
                                     // return the filtered media type
-                                    String filterType = Driver.mediaTypeFromChoice(filterTypeChoice);
+                                    String filterType = Interface.mediaTypeFromChoice(filterTypeChoice);
                                     filteredResults = library.filterByType(filterType);
                                 }
 
                                 //display the filtered list
-                                Driver.displayFilteredResults(filteredResults);
+                                Interface.displayFilteredResults(filteredResults);
                                 break;
 
                             // rate review completed entries
@@ -417,7 +298,7 @@ public class Driver {
                                 Interface.divider2();
                                 Interface.printCentered("=== RATE/REVIEW FROM COMPLETED LIBRARY ENTRIES ===");
                                 ArrayList<Media> completedEntries = library.filterByStatus(Status.COMPLETED);
-                                Driver.displayFilteredResults(completedEntries);
+                                Interface.displayFilteredResults(completedEntries);
 
                                 if(!completedEntries.isEmpty())
                                 {
@@ -464,7 +345,7 @@ public class Driver {
 
                                     Interface.divider2();
                                     Interface.printCentered("=== RATING/REVIEW UPDATED! ===");
-                                    Driver.displayFilteredResults(completedEntries);
+                                    Interface.displayFilteredResults(completedEntries);
                                 }
                                 break;
 
@@ -487,7 +368,7 @@ public class Driver {
                                 System.out.println("");
 
                                 //convert it into media type attribute
-                                String updateType = Driver.mediaTypeFromChoice(updateChoice);
+                                String updateType = Interface.mediaTypeFromChoice(updateChoice);
 
                                 // display the chosen media type
                                 if (updateType.equals("Movie"))
@@ -517,7 +398,7 @@ public class Driver {
                                 Interface.printCentered("CURRENT STATUS: " + updateEntry.getStatus().getDisplay());
 
                                 // get new status
-                                Status newStatus = Driver.getInputStatus(scanner);
+                                Status newStatus = Interface.getInputStatus(scanner);
                                 boolean statusUpdated = updateEntry.setStatus(newStatus);
 
                                 // display if naupdate status

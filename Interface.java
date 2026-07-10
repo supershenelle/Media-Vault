@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class Interface {
 
     public static void displayTitle()
@@ -31,6 +34,125 @@ public class Interface {
 
         System.out.println(" ".repeat(Math.max(padLeft, 0)) + text + " ".repeat(Math.max(padRight, 0)));
     }
+
+    //display profile function
+    public static void displayProfile(Scanner scanner, Profile profile, String[] films, String[] games, String[] music)
+    {
+        System.out.println("");
+        divider1();
+        printCentered("=== Y O U R   P R O F I L E ===");
+        divider1();
+        printCentered("USERNAME: @" + profile.getUsername());
+        divider2();
+        printCentered("DISPLAY NAME: " + profile.getDisplayName());
+        printCentered("BIO: " + profile.getBio());
+        divider1();
+        System.out.println("");
+
+        printCentered("MOST RECENT FILM ACTIVITY");
+        printBoxes(films);
+
+        printCentered("MOST RECENT VIDEO GAME ACTIVITY");
+        printBoxes(games);
+
+        printCentered("MOST RECENT ARTIST DISCOGRAPHY ACTIVITY");
+        System.out.println("TOP ALBUM: ");
+        System.out.println("TOP SONGS: \n");
+
+        divider1();
+    }
+
+    // display library para di paulit ulit sa switch
+    public static String libraryMenu(Scanner scanner)
+    {
+        printCentered("YOUR LIBRARY");
+        System.out.println("                -->    (A) ADD MEDIA TO LIBRARY");
+        System.out.println("                -->    (B) REMOVE MEDIA FROM LIBRARY");
+        System.out.println("                -->    (C) DISPLAY/FILTER ENTRIES FROM LIBRARY");
+        System.out.println("                -->    (D) RATE AND REVIEW COMPLETED ENTRIES");
+        System.out.println("                -->    (E) UPDATE MEDIA ENTRIES STATUS");
+        System.out.println("                -->    (F) Listen to songs/album idk brah");
+        System.out.println("                -->    (G) EXIT");
+        System.out.print("Enter choice: ");
+        String libChoice = scanner.nextLine();
+        while(!libChoice.equalsIgnoreCase("A") && !libChoice.equalsIgnoreCase("B") && !libChoice.equalsIgnoreCase("C") && !libChoice.equalsIgnoreCase("D") && !libChoice.equalsIgnoreCase("E") && !libChoice.equalsIgnoreCase("F") && !libChoice.equalsIgnoreCase("G"))
+        {
+            System.out.println("Please enter valid choice.");
+            System.out.print("Enter choice: ");
+            libChoice = scanner.nextLine();
+        }
+        System.out.println("");
+        return libChoice.toUpperCase();
+    }
+
+    // update status
+    public static Status getInputStatus(Scanner scanner)
+    {
+        System.out.println("   -->    STATUS:\n      -- (1) Planning\n      -- (2) In Progress\n      -- (3) Finished");
+        System.out.print("Enter status choice: ");
+        String choice = scanner.nextLine();
+        while(!choice.equals("1") && !choice.equals("2") && !choice.equals("3"))
+        {
+            System.out.println("Please enter valid choice.");
+            System.out.print("Enter status choice: ");
+            choice = scanner.nextLine();
+        }
+        return Status.fromChoice(choice);
+
+    }
+
+    // eto naman for adding media entry cuz bawal completed agad
+    public static Status getInputStatusAddMedia(Scanner scanner)
+    {
+        System.out.println("   -->    STATUS:\n      -- (1) Planning\n      -- (2) In Progress");
+        System.out.print("Enter status choice: ");
+        String choice = scanner.nextLine();
+        while(!choice.equals("1") && !choice.equals("2"))
+        {
+            System.out.println("Please enter valid choice.");
+            System.out.print("Enter status choice: ");
+            choice = scanner.nextLine();
+        }
+        return Status.fromChoice(choice);
+
+    }
+
+    public static String mediaTypeFromChoice(String choice)
+    {
+        switch(choice)
+        {
+            case "1":
+                return "Movie";
+            case "2":
+                return "Videogame";
+            case "3":
+                return "Music Artist";
+        }
+        return null;
+    }
+
+    public static void displayFilteredResults(ArrayList<Media> results)
+    {
+        divider1();
+        printCentered("=== RESULTS (" + results.size() + " FOUND) ===");
+        divider2();
+
+        if (results.isEmpty())
+        {
+            printCentered("[ No matching entries found ]");
+        }
+        else
+        {
+            for (Media media : results)
+            {
+                System.out.println(media.displayInfo());
+                divider2();
+            }
+        }
+        divider1();
+        System.out.println("");
+    }
+
     public static void printBoxes(String[] films)
     {
         int width = 20;
