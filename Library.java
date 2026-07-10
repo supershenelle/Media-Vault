@@ -17,7 +17,7 @@ public class Library {
             }
         }
         if (!hasMovies)
-            System.out.println("   [ No films available to remove ]");
+            System.out.println("   [ No films logged ]");
 
         System.out.println("--------------------------------");
     }
@@ -35,7 +35,7 @@ public class Library {
             }
         }
         if (!hasGames)
-            System.out.println("   [ No games available to remove ]");
+            System.out.println("   [ No games logged ]");
 
         System.out.println("--------------------------------");
     }
@@ -53,9 +53,37 @@ public class Library {
             }
         }
         if (!hasArtists)
-            System.out.println("   [ No artists available to remove ]");
+            System.out.println("   [ No artist activity logged ]");
 
         System.out.println("--------------------------------");
+    }
+
+    // para sa recent activity
+    public String[] getRecentTitles(String type)
+    {
+        // arraylist since pwede na wala munang naka-log or pwedeng isa lang rin etc etc.
+        List<String> titles = new ArrayList<>();
+
+        // pabackward tas top 3 lang
+        for (int i = entries.size() - 1; i >= 0 && titles.size() < 3; i--)
+        {
+            // get ung media na pinaka recent
+            Media media = entries.get(i);
+
+            if (media.getType().equals(type))
+            {
+                if (type.equals("Movie"))
+                    titles.add(media.getTitle());
+
+                else if (type.equals("Videogame"))
+                    titles.add(media.getTitle());
+
+                else if (type.equals("Music Artist"))
+                    titles.add(media.getTitle());
+            }
+        }
+
+        return titles.toArray(new String[0]);
     }
 
     public void addEntry(Media media)

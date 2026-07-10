@@ -111,8 +111,10 @@ public class Media {
     {
         if (type.equals("Movie"))
             return movie.getTitle();
+
         else if (type.equals("Videogame"))
             return videogame.getTitle();
+
         else
             return musicArtist.getName();
     }

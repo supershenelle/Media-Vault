@@ -18,14 +18,15 @@ public class Driver {
         Interface.printCentered("DISPLAY NAME: " + profile.getDisplayName());
         Interface.printCentered("BIO: " + profile.getBio());
         Interface.divider1();
+        System.out.println("");
 
-        Interface.printCentered("TOP 3 FILMS");
+        Interface.printCentered("MOST RECENT FILM ACTIVITY");
         Interface.printBoxes(films);
 
-        Interface.printCentered("TOP 3 VIDEO GAMES");
+        Interface.printCentered("MOST RECENT VIDEO GAME ACTIVITY");
         Interface.printBoxes(games);
 
-        Interface.printCentered("FAVORITE MUSIC ARTIST");
+        Interface.printCentered("MOST RECENT ARTIST DISCOGRAPHY ACTIVITY");
         System.out.println("TOP ALBUM: ");
         System.out.println("TOP SONGS: \n");
 
@@ -38,8 +39,9 @@ public class Driver {
         Interface.printCentered("YOUR LIBRARY");
         System.out.println("                -->    (A) ADD MEDIA TO LIBRARY");
         System.out.println("                -->    (B) REMOVE MEDIA FROM LIBRARY");
-        System.out.println("                -->    (C) FILTER MEDIA ENTRY IN LIBRARY");
-        System.out.println("                -->    (D) EXIT");
+        System.out.println("                -->    (C) DISPLAY/FILTER ENTRIES FROM LIBRARY");
+        System.out.println("                -->    (D) RATE AND REVIEW COMPLETED ENTRIES");
+        System.out.println("                -->    (E) EXIT");
         System.out.print("Enter choice: ");
         String libChoice = scanner.nextLine();
         while(!libChoice.equalsIgnoreCase("A") && !libChoice.equalsIgnoreCase("B") && !libChoice.equalsIgnoreCase("C") && !libChoice.equalsIgnoreCase("D"))
@@ -105,9 +107,6 @@ public class Driver {
 
     public static void main(String[] args) {
         boolean running = true;
-        String[] films = new String[3];
-        String[] games = new String[3];
-        String[] music = new String[3];
 
         while (running)
         {
@@ -117,7 +116,6 @@ public class Driver {
             System.out.println("");
             System.out.print("Enter input: ");
             String input = scanner.nextLine();
-            Library library = new Library();
 
             switch(input)
             {
@@ -128,7 +126,14 @@ public class Driver {
                     String displayName = scanner.nextLine();
                     System.out.print("Enter bio: ");
                     String bio = scanner.nextLine();
+
+                    // set up everything for new profile
                     Profile profile = new Profile(username, displayName, bio);
+                    Library library = new Library();
+                    String[] films = library.getRecentTitles("Movie");
+                    String[] games = library.getRecentTitles("Videogame");
+                    String[] music = library.getRecentTitles("Music Artist");
+
                     Driver.displayProfile(scanner, profile, films, games, music);
                     boolean exitLibrary = false;
 
@@ -137,6 +142,7 @@ public class Driver {
                         String libChoice = Driver.libraryMenu(scanner);
                         switch(libChoice)
                         {
+                            // add entry
                             case "A":
                                 Interface.divider2();
                                 Interface.printCentered("ENTER MEDIA TYPE");
@@ -254,9 +260,13 @@ public class Driver {
                                         System.out.println("");
                                         break;
                                 } // switch mediaChoice
+                                films = library.getRecentTitles("Movie");
+                                games = library.getRecentTitles("Videogame");
+                                music = library.getRecentTitles("Music Artist");
                                 Driver.displayProfile(scanner, profile, films, games, music);
                                 break;
 
+                            // remove entry
                             case "B" :
                                 Interface.divider2();
                                 Interface.printCentered("REMOVE MEDIA TYPE");
@@ -275,13 +285,15 @@ public class Driver {
                                 // cuz string is immutable, magagalaw remove type variable so we make anotha variable for displaying
                                 String removeLabel;
 
-                                if (removeType.equals("Movie")) {
+                                if (removeType.equals("Movie"))
                                     removeLabel = "FILM";
-                                } else if (removeType.equals("Videogame")) {
+
+                                else if (removeType.equals("Videogame"))
                                     removeLabel = "GAME";
-                                } else {
+
+                                else
                                     removeLabel = "MUSIC ARTIST";
-                                }
+
 
                                 System.out.println("");
                                 Interface.divider1();
@@ -310,8 +322,19 @@ public class Driver {
                                 }
                                 Interface.divider1();
                                 System.out.println("");
+                                films = library.getRecentTitles("Movie");
+                                games = library.getRecentTitles("Videogame");
+                                music = library.getRecentTitles("Music Artist");
+                                Driver.displayProfile(scanner, profile, films, games, music);
                                 break;
+
                             case "C" :
+                                Interface.divider2();
+                                Interface.printCentered("=== DISPLAYING ALL ENTRIES FROM LIBRARY ===\n");
+                                library.displayMovies();
+                                library.displayGames();
+                                library.displayArtists();
+
                                 //filter entry
                                 Interface.divider2();
                                 Interface.printCentered("FILTER MEDIA ENTRIES BY");
@@ -332,6 +355,7 @@ public class Driver {
                                     Status filterStatus = Driver.getInputStatus(scanner);
                                     filteredResults = library.filterByStatus(filterStatus);
                                 }
+
                                 else
                                 {
                                     Interface.printCentered("(1) FILMS           (2) GAMES              (3) DISCOGRAPHY");
