@@ -3,6 +3,9 @@ import java.util.Scanner;
 
 public class Interface {
 
+    /**
+     * displays media vault title
+     */
     public static void displayTitle()
     {
         System.out.println("\n\n");
@@ -16,16 +19,26 @@ public class Interface {
         System.out.println("+====================================================================================+\n");
     }
 
+    /**
+     * divider
+     */
     public static void divider1()
     {
         System.out.println("+====================================================================================+");
     }
 
+    /**
+     * 2nd divider
+     */
     public static void divider2()
     {
         System.out.println("+------------------------------------------------------------------------------------+");
     }
 
+    /**
+     * centers text
+     * @param text text you want to center
+     */
     public static void printCentered(String text)
     {
         int totalPad = 86 - text.length();
@@ -36,6 +49,14 @@ public class Interface {
     }
 
     //display profile function
+    /**
+     * displays profile
+     * @param scanner input scanner
+     * @param profile profile to display
+     * @param films films to display
+     * @param games games to display
+     * @param music music to display
+     */
     public static void displayProfile(Scanner scanner, Profile profile, String[] films, String[] games, String[] music)
     {
         System.out.println("");
@@ -62,6 +83,12 @@ public class Interface {
     }
 
     // display library para di paulit ulit sa switch
+
+    /**
+     * displays library menu and gets input for menu
+     * @param scanner input
+     * @return input for menu choice
+     */
     public static String libraryMenu(Scanner scanner)
     {
         printCentered("----- YOUR LIBRARY -----\n");
@@ -86,6 +113,12 @@ public class Interface {
     }
 
     // update status
+
+    /**
+     * display status menu and get input for status
+     * @param scanner input scanner
+     * @return status based on user's input
+     */
     public static Status getInputStatus(Scanner scanner)
     {
         System.out.println("   -->    STATUS:\n      -- (1) Planning\n      -- (2) In Progress\n      -- (3) Finished");
@@ -102,6 +135,12 @@ public class Interface {
     }
 
     // eto naman for adding media entry cuz bawal completed agad
+
+    /**
+     * display status menu(when initially adding media entry) and get input
+     * @param scanner input scanner
+     * @return status based on user's input
+     */
     public static Status getInputStatusAddMedia(Scanner scanner)
     {
         System.out.println("   -->    STATUS:\n      -- (1) Planning\n      -- (2) In Progress");
@@ -118,6 +157,13 @@ public class Interface {
     }
 
     // kasi yung scanner.nextInt() nagkakaroon ng issue na magtthrow so eto nlng.
+
+    /**
+     * prompt user until it gives a valid integer
+     * @param scanner user input
+     * @param prompt message to display
+     * @return int entered by user
+     */
     public static int getIntInput(Scanner scanner, String prompt)
     {
         System.out.print(prompt);
@@ -133,6 +179,11 @@ public class Interface {
         return value;
     }
 
+    /**
+     * return media type based from the menu interface
+     * @param choice user input
+     * @return media type based on choice
+     */
     public static String mediaTypeFromChoice(String choice)
     {
         switch(choice)
@@ -147,6 +198,10 @@ public class Interface {
         return null;
     }
 
+    /**
+     * displays the filtered media entries
+     * @param results contains the filtered media entries to display
+     */
     public static void displayFilteredResults(ArrayList<Media> results)
     {
         divider1();
@@ -169,6 +224,10 @@ public class Interface {
         System.out.println("");
     }
 
+    /**
+     * prints three boxes
+     * @param media contains of up to three titles to display inside the box
+     */
     public static void printBoxes(String[] media)
     {
         int width = 20;
@@ -195,6 +254,13 @@ public class Interface {
     }
 
     // if ever wala pa favorites so maging null muna sya
+
+    /**
+     * get title based on index
+     * @param filmTitle title to read from
+     * @param index index to retrieve
+     * @return title at the given index
+     */
     private static String getTitle(String[] filmTitle, int index)
     {
         // diba 0-2 lang so magsstop na sya pag sobra na
@@ -204,6 +270,11 @@ public class Interface {
         return filmTitle[index];
     }
 
+    /**
+     * display media type menu selection and get input
+     * @param scanner user scanner
+     * @return selected media type
+     */
     public static String getMediaTypeChoice(Scanner scanner)
     {
         printCentered("(1) FILMS           (2) GAMES              (3) DISCOGRAPHY");
