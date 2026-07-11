@@ -474,6 +474,13 @@ public class Driver {
                                 System.out.println("");
                                 break;
 
+                            case "X":
+                                Interface.divider2();
+                                Interface.printCentered("=== LIBRARY SUMMARY ===");
+                                Interface.divider2();
+                                library.displaySummary();
+                                Interface.divider1();
+                                break;
 
                             case "G" :
                                 exitLibrary = true;

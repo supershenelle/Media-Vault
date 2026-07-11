@@ -4,6 +4,53 @@ import java.util.List;
 public class Library {
     private ArrayList<Media> entries = new ArrayList<>();
 
+    public void displaySummary()
+    {
+        int plannedCount = 0;
+        int inProgressCount = 0;
+        int completedCount = 0;
+
+        // eto ung if narate na so hiwalay sya sa completed entries gets ba...
+        int completedRatedCount = 0;
+        int completedRatingTotal = 0;
+
+        for (Media media : entries)
+        {
+            if (media.getStatus() == Status.PLANNED)
+                plannedCount++;
+
+            else if (media.getStatus() == Status.IN_PROGRESS)
+                inProgressCount++;
+
+            else if (media.getStatus() == Status.COMPLETED)
+            {
+                completedCount++;
+                if (media.getRating() > 0)
+                {
+                    completedRatedCount++;
+                    completedRatingTotal += media.getRating();
+                }
+            }
+        }
+
+        System.out.println("--- LIBRARY SUMMARY ---");
+        System.out.println("   -->    Total entries: " + entries.size());
+        System.out.println("   -->    Planned: " + plannedCount);
+        System.out.println("   -->    In Progress: " + inProgressCount);
+        System.out.println("   -->    Completed: " + completedCount);
+
+        if (completedRatedCount > 0)
+        {
+            double averageRating = (double)completedRatingTotal / completedRatedCount;
+            System.out.printf("   -->    Average rating of completed entries: %.2f%n", averageRating);
+        }
+        else
+            System.out.println("   -->    Average rating of completed entries: N/A (no rated completed entries yet)");
+
+        System.out.println("--- TO VIEW ALL ENTRIES, PLEASE USE OPTION (C) IN THE LIBRARY MENU ---");
+        System.out.println("-----------------------\n");
+    }
+
     public void displayMovies()
     {
         System.out.println("--- CURRENT FILMS IN LIBRARY ---");

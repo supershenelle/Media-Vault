@@ -64,16 +64,18 @@ public class Interface {
     // display library para di paulit ulit sa switch
     public static String libraryMenu(Scanner scanner)
     {
-        printCentered("YOUR LIBRARY");
+        printCentered("----- YOUR LIBRARY -----\n");
         System.out.println("   -->    (A) ADD MEDIA                  -->    (E) UPDATE MEDIA ENTRIES STATUS");
         System.out.println("   -->    (B) REMOVE MEDIA               -->    (F) UPDATE ARTIST DISCOGRAPHY LOGS");
         System.out.println("   -->    (C) DISPLAY/FILTER ENTRIES     -->    (G) BACK TO MAIN NAVIGATION/PROFILE");
-        System.out.println("   -->    (D) RATE AND REVIEW COMPLETED ENTRIES");
+        System.out.println("   -->    (D) RATE AND REVIEW COMPLETED ENTRIES\n");
+    
+        System.out.println("   -->    (X) VIEW LIBRARY SUMMARY (TOTAL ENTRIES AND AVERAGE RATINGS)");
     
         System.out.println("");
         System.out.print("Enter choice: ");
         String libChoice = scanner.nextLine();
-        while(!libChoice.equalsIgnoreCase("A") && !libChoice.equalsIgnoreCase("B") && !libChoice.equalsIgnoreCase("C") && !libChoice.equalsIgnoreCase("D") && !libChoice.equalsIgnoreCase("E") && !libChoice.equalsIgnoreCase("F") && !libChoice.equalsIgnoreCase("G"))
+        while(!libChoice.equalsIgnoreCase("A") && !libChoice.equalsIgnoreCase("B") && !libChoice.equalsIgnoreCase("C") && !libChoice.equalsIgnoreCase("D") && !libChoice.equalsIgnoreCase("E") && !libChoice.equalsIgnoreCase("F") && !libChoice.equalsIgnoreCase("G") && !libChoice.equalsIgnoreCase("X"))
         {
             System.out.println("Please enter valid choice.");
             System.out.print("Enter choice: ");
