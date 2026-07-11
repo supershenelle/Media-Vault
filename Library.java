@@ -1,9 +1,16 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * manages a list of media entry objects
+ */
 public class Library {
     private ArrayList<Media> entries = new ArrayList<>();
 
+    /**
+     * display summary of the library. includes total number
+     * of entries, counts per status, and average rating of all rated entries
+     */
     public void displaySummary()
     {
         int plannedCount = 0;
@@ -51,6 +58,9 @@ public class Library {
         System.out.println("-----------------------\n");
     }
 
+    /**
+     * displays all movies currently in the library
+     */
     public void displayMovies()
     {
         System.out.println("--- CURRENT FILMS IN LIBRARY ---");
@@ -69,7 +79,9 @@ public class Library {
         System.out.println("--------------------------------");
     }
 
-    // Display all games currently in the library
+    /**
+     * displays all videogames currently in the library
+     */
     public void displayGames() {
         System.out.println("--- CURRENT GAMES IN LIBRARY ---");
         boolean hasGames = false;
@@ -87,7 +99,10 @@ public class Library {
         System.out.println("--------------------------------");
     }
 
-    // Display all music artists currently in the library
+
+    /**
+     * displays all music artists currently in the library
+     */
     public void displayArtists()
     {
         System.out.println("--- CURRENT ARTISTS IN LIBRARY ---");
@@ -105,7 +120,11 @@ public class Library {
         System.out.println("--------------------------------");
     }
 
-    // para sa recent activity
+    /**
+     * get the top 3 recent titles in the library
+     * @param type contains media type
+     * @return array of the 3 most recent title
+     */
     public String[] getRecentTitles(String type)
     {
         // arraylist since pwede na wala munang naka-log or pwedeng isa lang rin etc etc.
@@ -130,6 +149,11 @@ public class Library {
         return titles.toArray(new String[0]);
     }
 
+    /**
+     * get the top 3 recent artist discography
+     * @param type is the media type
+     * @return array of the 3 recent artist discography
+     */
     public String[] getRecentArtistDiscography(String type)
     {
         List<String> discography = new ArrayList<>();
@@ -153,26 +177,21 @@ public class Library {
         return discography.toArray(new String[0]);
     }
 
-    public boolean addEntry(Media media)
+    /**
+     * add new media entry to library
+     * @param media the media entry to add
+     */
+    public void addEntry(Media media)
     {
-        if (hasDuplicateEntry(media))
-            return false;
-
         entries.add(media);
-        return true;
     }
 
-    public boolean hasDuplicateEntry(Media media)
-    {
-        for (Media entry : entries)
-        {
-            if (entry.getType().equalsIgnoreCase(media.getType()) && entry.getTitle().equalsIgnoreCase(media.getTitle()))
-                return true;
-        }
-        return false;
-    }
 
-    // update on uml
+    /**
+     * remove media entry from the library
+     * @param media the entry to remove
+     * @return true if succesfully removed, false otherwise
+     */
     public boolean removeEntry(Media media)
     {
         if (media != null)
@@ -183,12 +202,21 @@ public class Library {
         return false;
     }
 
+    /**
+     * get all media entries in library
+     * @return all media entries
+     */
     public ArrayList<Media> getEntries()
     {
         return entries;
     }
 
-
+    /**
+     * finds the media entry in the library
+     * @param type is the media type
+     * @param title is the title/ name of the media you are searching for
+     * @return
+     */
     public Media findEntry(String type, String title)
     {
         for (Media media : entries)
@@ -199,6 +227,11 @@ public class Library {
         return null;
     }
 
+    /**
+     * filter media entries by status
+     * @param status contains the status you want to filter by
+     * @return new arraylist containing only media entries with that status
+     */
     public ArrayList<Media> filterByStatus(Status status)
     {
         ArrayList<Media> filtered = new ArrayList<>();
@@ -210,6 +243,11 @@ public class Library {
         return filtered;
     }
 
+    /**
+     * filter media entries by type
+     * @param type contains the type you want to filter by
+     * @return new arraylist containing only entries with that media type
+     */
     public ArrayList<Media> filterByType(String type)
     {
         ArrayList<Media> filtered = new ArrayList<>();
