@@ -57,7 +57,7 @@ public class Interface {
      * @param games games to display
      * @param music music to display
      */
-    public static void displayProfile(Scanner scanner, Profile profile, String[] films, String[] games, String[] music)
+    public static void displayProfile(Profile profile, String[] films, String[] games, String[] music)
     {
         System.out.println("");
         divider1();

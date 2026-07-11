@@ -44,7 +44,7 @@ public class Driver {
                     games = library.getRecentTitles("Videogame");
                     music = library.getRecentArtistDiscography("Music Artist");
 
-                    Interface.displayProfile(scanner, profile, films, games, music);
+                    Interface.displayProfile(profile, films, games, music);
                     boolean exitLibrary = false;
 
                     while (!exitLibrary)
@@ -163,7 +163,7 @@ public class Driver {
                                 films = library.getRecentTitles("Movie");
                                 games = library.getRecentTitles("Videogame");
                                 music = library.getRecentArtistDiscography("Music Artist");
-                                Interface.displayProfile(scanner, profile, films, games, music);
+                                Interface.displayProfile(profile, films, games, music);
                                 break;
 
                             // remove entry
@@ -221,7 +221,7 @@ public class Driver {
                                 films = library.getRecentTitles("Movie");
                                 games = library.getRecentTitles("Videogame");
                                 music = library.getRecentArtistDiscography("Music Artist");
-                                Interface.displayProfile(scanner, profile, films, games, music);
+                                Interface.displayProfile(profile, films, games, music);
                                 break;
 
                             // filter entry
@@ -488,7 +488,7 @@ public class Driver {
                         break;
                     }
 
-                    Interface.displayProfile(scanner, profile, films, games, music);
+                    Interface.displayProfile(profile, films, games, music);
                     break;
 
                 case "2":
