@@ -39,7 +39,7 @@ public class Driver {
                     // set up everything for new profile
                     profile = new Profile(username, displayName, bio);
                     profileCreated = true;
-                    library = new Library();
+                    library = profile.getLibrary();
                     films = library.getRecentTitles("Movie");
                     games = library.getRecentTitles("Videogame");
                     music = library.getRecentArtistDiscography("Music Artist");
@@ -56,20 +56,12 @@ public class Driver {
                             case "A":
                                 Interface.divider2();
                                 Interface.printCentered("ENTER MEDIA TYPE");
-                                Interface.printCentered("(1) FILMS           (2) GAMES              (3) DISCOGRAPHY");
-                                System.out.print("Enter choice: ");
-                                String mediaChoice = scanner.nextLine();
-                                while(!mediaChoice.equals("1") && !mediaChoice.equals("2") && !mediaChoice.equals("3"))
-                                {
-                                    System.out.println("Please enter valid choice.");
-                                    System.out.print("Enter choice: ");
-                                    mediaChoice = scanner.nextLine();
-                                }
+                                String mediaChoice =Interface.getMediaTypeChoice(scanner);
                                 System.out.println("");
 
                                 switch(mediaChoice)
                                 {
-                                    case "1":
+                                    case "Movie":
                                         System.out.println("");
                                         Interface.divider1();
                                         Interface.printCentered("=== ADDING FILM ENTRY ===");
@@ -92,7 +84,7 @@ public class Driver {
                                         System.out.println("");
                                         break;
 
-                                    case "2":
+                                    case "Videogame":
                                         System.out.println("");
                                         Interface.divider1();
                                         Interface.printCentered("=== ADDING GAME ENTRY ===");
@@ -117,7 +109,7 @@ public class Driver {
                                         System.out.println("");
                                         break;
 
-                                    case "3":
+                                    case "Music Artist":
                                         // display
                                         System.out.println("");
                                         Interface.divider1();
@@ -133,6 +125,13 @@ public class Driver {
 
                                         // get ilan albums meron sa artist na yyun
                                         int albumCount = Interface.getIntInput(scanner, "   -->    HOW MANY ALBUMS DOES THIS ARTIST HAVE: ");
+                                        while(albumCount < 1)
+                                        {
+                                            System.out.println("An artist cannot have zero albums");
+                                            System.out.print("Enter choice: ");
+                                            albumCount = Interface.getIntInput(scanner, "   -->    HOW MANY ALBUMS DOES THIS ARTIST HAVE: ");
+                                        }
+
                                         // create the albums (SHEN KAW NA BAHALA SA INTERFACE NETO)
                                         for(int i = 1; i <= albumCount; i++)
                                         {
@@ -148,9 +147,7 @@ public class Driver {
 
                                             int tracks = Interface.getIntInput(scanner, "   -->    Number of tracks: ");
 
-                                            Album album = new Album(title, genre, year, tracks);
-
-                                            musicArtist.addAlbum(album);
+                                            musicArtist.addAlbum(title, genre, year, tracks);
                                         }
 
                                         // get status nung artist then create the media and add it sa library
@@ -174,18 +171,8 @@ public class Driver {
                                 // display and get anong media type ireremove
                                 Interface.divider2();
                                 Interface.printCentered("REMOVE MEDIA TYPE");
-                                Interface.printCentered("(1) FILMS           (2) GAMES              (3) DISCOGRAPHY");
-                                System.out.print("Enter choice: ");
-                                String removeChoice = scanner.nextLine();
-                                while(!removeChoice.equals("1") && !removeChoice.equals("2") && !removeChoice.equals("3"))
-                                {
-                                    System.out.println("Please enter valid choice.");
-                                    System.out.print("Enter choice: ");
-                                    removeChoice = scanner.nextLine();
-                                }
+                                String removeType = Interface.getMediaTypeChoice(scanner);
                                 System.out.println("");
-                                // convert the choice to media type attribute
-                                String removeType = Interface.mediaTypeFromChoice(removeChoice);
 
                                 // cuz string is immutable, magagalaw remove type variable so we make anotha variable for displaying
                                 // DISPLAY PURPOSES ONLY
@@ -274,17 +261,9 @@ public class Driver {
                                 else
                                 {
                                     // display/ kunin anong media type ififilter
-                                    Interface.printCentered("(1) FILMS           (2) GAMES              (3) DISCOGRAPHY");
-                                    System.out.print("Enter choice: ");
-                                    String filterTypeChoice = scanner.nextLine();
-                                    while(!filterTypeChoice.equals("1") && !filterTypeChoice.equals("2") && !filterTypeChoice.equals("3"))
-                                    {
-                                        System.out.println("Please enter valid choice.");
-                                        System.out.print("Enter choice: ");
-                                        filterTypeChoice = scanner.nextLine();
-                                    }
+                                    String filterType= Interface.getMediaTypeChoice(scanner);
+
                                     // return the filtered media type
-                                    String filterType = Interface.mediaTypeFromChoice(filterTypeChoice);
                                     filteredResults = library.filterByType(filterType);
                                 }
 
@@ -349,21 +328,8 @@ public class Driver {
                                 // display kung anong media type iuupdate yung status
                                 Interface.divider2();
                                 Interface.printCentered("=== UPDATE STATUS OF MEDIA ENTRY ===");
-                                Interface.printCentered("(1) FILMS           (2) GAMES              (3) DISCOGRAPHY");
-                                System.out.print("Enter choice: ");
-                                String updateChoice = scanner.nextLine();
-
-                                // kunin yung choice
-                                while(!updateChoice.equals("1") && !updateChoice.equals("2") && !updateChoice.equals("3"))
-                                {
-                                    System.out.println("Please enter valid choice.");
-                                    System.out.print("Enter choice: ");
-                                    updateChoice = scanner.nextLine();
-                                }
+                                String updateType = Interface.getMediaTypeChoice(scanner);
                                 System.out.println("");
-
-                                //convert it into media type attribute
-                                String updateType = Interface.mediaTypeFromChoice(updateChoice);
 
                                 // display the chosen media type
                                 if (updateType.equals("Movie"))
@@ -379,13 +345,14 @@ public class Driver {
                                 String updateTitle = scanner.nextLine();
                                 Media updateEntry = library.findEntry(updateType, updateTitle); //nakuha na yung media entry
 
-                                //input validation
-                                while (updateEntry == null)
+                                //pag wala nakuha, break
+                                if (updateEntry == null)
                                 {
-                                    System.out.println("ERROR: Entry not found in this category.");
-                                    System.out.print("   -->    Enter title of entry to update: ");
-                                    updateTitle = scanner.nextLine();
-                                    updateEntry = library.findEntry(updateType, updateTitle);
+                                    Interface.divider2();
+                                    Interface.printCentered("ERROR: ENTRY NOT FOUND");
+                                    Interface.divider1();
+                                    System.out.println();
+                                    break;
                                 }
 
                                 // display current status nung napiling media
@@ -418,13 +385,14 @@ public class Driver {
                                 String logArtistTitle = scanner.nextLine();
                                 Media logArtistEntry = library.findEntry("Music Artist", logArtistTitle);
 
-                                // input validation
-                                while (logArtistEntry == null)
+                                // break if not found
+                                if (logArtistEntry == null)
                                 {
-                                    System.out.println("ERROR: Artist not found in library.");
-                                    System.out.print("   -->    Enter artist name: ");
-                                    logArtistTitle = scanner.nextLine();
-                                    logArtistEntry = library.findEntry("Music Artist", logArtistTitle);
+                                    Interface.divider2();
+                                    Interface.printCentered("ERROR: Artist not found in library.");
+                                    Interface.divider1();
+                                    System.out.println();
+                                    break;
                                 }
 
                                 // from the media class, kunin yung music artist class don
