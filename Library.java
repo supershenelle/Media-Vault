@@ -153,9 +153,23 @@ public class Library {
         return discography.toArray(new String[0]);
     }
 
-    public void addEntry(Media media)
+    public boolean addEntry(Media media)
     {
+        if (hasDuplicateEntry(media))
+            return false;
+
         entries.add(media);
+        return true;
+    }
+
+    public boolean hasDuplicateEntry(Media media)
+    {
+        for (Media entry : entries)
+        {
+            if (entry.getType().equalsIgnoreCase(media.getType()) && entry.getTitle().equalsIgnoreCase(media.getTitle()))
+                return true;
+        }
+        return false;
     }
 
     // update on uml

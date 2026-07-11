@@ -331,46 +331,61 @@ public class Driver {
                                 String updateType = Interface.getMediaTypeChoice(scanner);
                                 System.out.println("");
 
-                                // display the chosen media type
-                                if (updateType.equals("Movie"))
-                                    library.displayMovies();
-                                else if (updateType.equals("Videogame"))
-                                    library.displayGames();
+                                if (library.filterByType(updateType).isEmpty())
+                                    {
+                                        Interface.divider2();
+                                        Interface.printCentered("ERROR: No " + updateType + " entries found in library.");
+                                        Interface.divider1();
+                                        System.out.println();
+                                        break;
+                                    }
+
                                 else
-                                    library.displayArtists();
-                                System.out.println("");
-
-                                // kunin yung media entry na yun
-                                System.out.print("   -->    Enter title of entry to update: ");
-                                String updateTitle = scanner.nextLine();
-                                Media updateEntry = library.findEntry(updateType, updateTitle); //nakuha na yung media entry
-
-                                //pag wala nakuha, break
-                                if (updateEntry == null)
                                 {
+                                    // display the chosen media type
+                                    if (updateType.equals("Movie"))
+                                        library.displayMovies();
+
+                                    else if (updateType.equals("Videogame"))
+                                        library.displayGames();
+
+                                    else
+                                        library.displayArtists();
+
+                                    System.out.println("");
+
+                                    // kunin yung media entry na yun
+                                    System.out.print("   -->    Enter title of entry to update: ");
+                                    String updateTitle = scanner.nextLine();
+                                    Media updateEntry = library.findEntry(updateType, updateTitle); //nakuha na yung media entry
+
+                                    //pag wala nakuha, break
+                                    if (updateEntry == null)
+                                    {
+                                        Interface.divider2();
+                                        Interface.printCentered("ERROR: ENTRY NOT FOUND");
+                                        Interface.divider1();
+                                        System.out.println();
+                                        break;
+                                    }
+
+                                    // display current status nung napiling media
                                     Interface.divider2();
-                                    Interface.printCentered("ERROR: ENTRY NOT FOUND");
+                                    Interface.printCentered("CURRENT STATUS: " + updateEntry.getStatus().getDisplay());
+
+                                    // get new status
+                                    Status newStatus = Interface.getInputStatus(scanner);
+                                    boolean statusUpdated = updateEntry.setStatus(newStatus);
+
+                                    // display if naupdate status
+                                    Interface.divider2();
+                                    if (statusUpdated)
+                                        Interface.printCentered("=== STATUS SUCCESSFULLY UPDATED TO " + newStatus.getDisplay().toUpperCase() + "! ===");
+                                    else
+                                        Interface.printCentered("!!! STATUS NOT UPDATED !!!");
                                     Interface.divider1();
-                                    System.out.println();
-                                    break;
-                                }
-
-                                // display current status nung napiling media
-                                Interface.divider2();
-                                Interface.printCentered("CURRENT STATUS: " + updateEntry.getStatus().getDisplay());
-
-                                // get new status
-                                Status newStatus = Interface.getInputStatus(scanner);
-                                boolean statusUpdated = updateEntry.setStatus(newStatus);
-
-                                // display if naupdate status
-                                Interface.divider2();
-                                if (statusUpdated)
-                                    Interface.printCentered("=== STATUS SUCCESSFULLY UPDATED TO " + newStatus.getDisplay().toUpperCase() + "! ===");
-                                else
-                                    Interface.printCentered("!!! STATUS NOT UPDATED !!!");
-                                Interface.divider1();
-                                System.out.println("");
+                                    System.out.println("");
+                                }                                
                                 break;
 
                             case "F":
@@ -379,6 +394,15 @@ public class Driver {
                                 Interface.printCentered("=== LOG SONGS LISTENED (MUSIC ARTIST ALBUMS) ===");
                                 library.displayArtists();
                                 System.out.println("");
+                                
+                                if (library.filterByType("Music Artist").isEmpty())
+                                {
+                                    Interface.divider2();
+                                    Interface.printCentered("ERROR: No artists in library.");
+                                    Interface.divider1();
+                                    System.out.println();
+                                    break;
+                                }
 
                                 // get/search artist media entry
                                 System.out.print("   -->    Enter artist name: ");
