@@ -215,7 +215,7 @@ public class Library {
      * finds the media entry in the library
      * @param type is the media type
      * @param title is the title/ name of the media you are searching for
-     * @return
+     * @return the media entry if found, otherwise return null
      */
     public Media findEntry(String type, String title)
     {

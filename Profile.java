@@ -9,8 +9,6 @@ public class Profile {
     private String displayName;
     private String bio;
     private Library library;
-    private List<Media> favorites = new ArrayList<>();
-    private List<Media> recentActivity = new ArrayList<>();
 
     /**
      * construct a profile and creates a library inside

@@ -51,7 +51,6 @@ public class Interface {
     //display profile function
     /**
      * displays profile
-     * @param scanner input scanner
      * @param profile profile to display
      * @param films films to display
      * @param games games to display
